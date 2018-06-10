@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "^3.3.1",
+    "npm": "^6.1.0",
     "tone": "^0.12.80"
   },
   "devDependencies": {
@@ -24,8 +25,8 @@
     "budo": "^11.2.2",
     "uglify-js": "^3.4.0"
   },
-  "repository" : { 
-    "type" : "git",
-    "url" : "https://github.com/apdunston/hollow-cart.git"
-  }  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apdunston/hollow-cart.git"
+  }
 }
