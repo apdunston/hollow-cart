@@ -1,0 +1,1 @@
+var TwoPlayer = require('./2player.js');

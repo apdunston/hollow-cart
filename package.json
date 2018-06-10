@@ -1,0 +1,27 @@
+{
+  "name": "hollow-cart",
+  "version": "1.0.0",
+  "description": "Hollow Cart Maze Game Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "budo src/index.js:bundle.js --live",
+    "build": "browserify src/index.js > bundle.js",
+    "package": "browserify src/index.js | uglifyjs -cm > bundle.js"
+  },
+  "keywords": [
+    "game",
+    "engine"
+  ],
+  "author": "Adrian P. Dunston",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "tone": "^0.12.80"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.2",
+    "budo": "^11.2.2",
+    "uglify-js": "^3.4.0"
+  }
+}
