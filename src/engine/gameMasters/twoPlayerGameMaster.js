@@ -5,7 +5,7 @@ var TwoPlayerMazeGame = require('../games/twoPlayerMazeGame.js');
 var DisplayDriver = require('../drivers/displayDriver.js');
 
 module.exports = function() {
-  var TwoPlayer = function TwoPlayer(canvas1, canvas2, keyboardDriver, soundDriver) {
+  var TwoPlayerGameMaster = function TwoPlayerGameMaster(canvas1, canvas2, keyboardDriver, soundDriver) {
     GameMaster.call(this); // super()
     var gridLength = 10;
     var squareLength = 20;
@@ -17,18 +17,32 @@ module.exports = function() {
     var display2 = new Display(new DisplayDriver(canvas2), displaySpeed);
     display2.setColor("black");
     this.addGame(new TwoPlayerMazeGame(keyboardDriver, display1, display2, gridLength, squareLength));
-    this.start();
-  }; /**
-      * Interface GameMaster
-      */
+  }; 
 
-  TwoPlayer.prototype = Object.create(GameMaster.prototype);
-  TwoPlayer.prototype.constructor = TwoPlayer;
+  /**
+    * Interface GameMaster
+    */
 
-  TwoPlayer.prototype.next = function () {
+  TwoPlayerGameMaster.prototype = Object.create(GameMaster.prototype);
+  TwoPlayerGameMaster.prototype.constructor = TwoPlayerGameMaster;
+
+  TwoPlayerGameMaster.prototype.next = function () {
     this.stopCurrentGame();
     this.startCurrentGame();
   };
 
-  return TwoPlayer;
+  TwoPlayerGameMaster.prototype.start = function (maze) {
+    this.stopCurrentGame();
+    this.currentGameIndex = 0;
+    this.startCurrentGame(maze);
+  };
+
+  TwoPlayerGameMaster.prototype.startCurrentGame = function (maze) {
+    if (this.currentGameIndex !== null) {
+      this.games[this.currentGameIndex].start(maze);
+    }
+  };
+
+
+  return TwoPlayerGameMaster;
 }();

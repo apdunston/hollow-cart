@@ -74,5 +74,9 @@ module.exports = function() {
     this.next();
   };
 
+  GameMaster.prototype.getCurrentGame = function() {
+    return this.games[this.currentGameIndex];
+  }
+
   return GameMaster;
 }();

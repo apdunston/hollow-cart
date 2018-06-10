@@ -23,5 +23,9 @@
     "browserify": "^16.2.2",
     "budo": "^11.2.2",
     "uglify-js": "^3.4.0"
-  }
+  },
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/apdunston/hollow-cart.git"
+  }  
 }

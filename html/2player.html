@@ -3,8 +3,11 @@
   <script src="../bundle.js"></script>
 </head>
 <body style="font-family: 'Courier New', Courier, monospace; background-color: #333333; color: white; height: 100%; overflow: hidden;">
-
-<div>
+<p>uncomment global $ in 2player.js or this won't work.</p>
+<div class="controls">
+  <button class="start-game">Start Game</button>
+</div>
+<div class="play-area" style="display: none">
   <div style="float: left">
     <div>
       <canvas id="canvas1"></canvas>
@@ -19,5 +22,16 @@
     <div style="text-align: center">Effects</div>
   </div>
 <div style="clear: both;"></div>
+
+<script>
+  var maze = null;
+  $('.start-game').click(function() {
+    if (maze == null) {
+      maze = startGame();
+    } else {
+      maze = startGame(maze);
+    }
+  });
+</script>
 </body>
 </html>

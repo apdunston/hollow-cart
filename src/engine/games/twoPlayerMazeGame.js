@@ -14,7 +14,8 @@ var Gamespace = require('../gamespace.js');
 var Firework = require('../effects/firework.js');
 
 module.exports = function () {
-  var TwoPlayerMazeGame = function TwoPlayerMazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, squareLength) {
+  var TwoPlayerMazeGame = function TwoPlayerMazeGame(keyboardDriver, mazeDisplay, neuralDisplay, 
+      gridLength, squareLength) {
     var self = this;
     Game.call(self);
     this.gridLength = gridLength;
@@ -28,10 +29,10 @@ module.exports = function () {
 
   TwoPlayerMazeGame.prototype = Object.create(Game.prototype);
 
-  TwoPlayerMazeGame.prototype.start = function () {
+  TwoPlayerMazeGame.prototype.start = function (maze) {
     var self = this;
     Game.prototype.start.call(self);
-    this.reset();
+    this.reset(maze);
   };
 
   TwoPlayerMazeGame.prototype.drawLoop = function () {
@@ -47,11 +48,17 @@ module.exports = function () {
     this.drawLoop();
   };
 
-  TwoPlayerMazeGame.prototype.reset = function () {
+  TwoPlayerMazeGame.prototype.reset = function (maze) {
     this.won = false;
-    this.map = MazeData.generate(this.gridLength, this.gridLength);
-    this.drawMap = MazeData.translate(this.map);
-    this.maze = new Maze(this.drawMap, this.squareLength);
+
+    if (maze == null) {
+      var map = MazeData.generate(this.gridLength, this.gridLength);
+      var drawMap = MazeData.translate(map);
+      this.maze = new Maze(drawMap, this.squareLength);
+    } else {
+      this.maze = maze;
+    }
+    
     this.player = new Player(this.gridLength, this.squareLength, this);
     this.player2 = new Player(this.gridLength, this.squareLength, this);
     this.player2.setColor("#555555");
@@ -75,6 +82,10 @@ module.exports = function () {
   TwoPlayerMazeGame.prototype.getPlayer = function () {
     return this.player;
   };
+
+  TwoPlayerMazeGame.prototype.getMaze = function() {
+    return this.maze;
+  }
 
   TwoPlayerMazeGame.prototype.keyDown = function (evt) {
     switch (evt.keyCode) {
