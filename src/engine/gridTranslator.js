@@ -6,9 +6,17 @@
 
 module.exports = function() {
   var GridTranslator = function GridTranslator(xOffset, yOffset, squareLength) {
-    this.xOffset = xOffset;
-    this.yOffset = yOffset;
-    this.squareLength = squareLength;
+
+    // Overload - if you pass in gridtranslator data, initialize off that data
+    if (typeof(xOffset) == "object") {
+      this.xOffSet = xOffset.xOffset;
+      this.yOffset = xOffset.yOffset;
+      this.squareLength = xOffset.squareLength;
+    } else {
+      this.xOffset = xOffset;
+      this.yOffset = yOffset;
+      this.squareLength = squareLength;
+    }
   };
 
   GridTranslator.prototype.constructor = GridTranslator;

@@ -56,7 +56,7 @@ module.exports = function () {
       var drawMap = MazeData.translate(map);
       this.maze = new Maze(drawMap, this.squareLength);
     } else {
-      this.maze = maze;
+      this.maze = new Maze(maze.drawMap, this.squareLength);
     }
     
     this.player = new Player(this.gridLength, this.squareLength, this);
