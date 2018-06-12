@@ -1,1 +1,2 @@
-var TwoPlayer = require('./2player.js');
+global.$ = require("jquery");
+global.HollowCart = require('./engine/hollowCart.js');
