@@ -7,6 +7,7 @@
 
 var Game = require('./game.js');
 var MazeData = require('../mazeData.js');
+var Gamespace = require('../gamespace.js');
 
 module.exports = function () {
   var MazeGame = function MazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, squareLength) {
@@ -69,15 +70,16 @@ module.exports = function () {
   };
 
   MazeGame.prototype.getMoveForEvent = function(evt) {
+    var self = this;
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
-        return function() {return this.player.left()};
+        return function() {return self.player.left()};
       case Gamespace.UP_CODE:
-        return function() {return this.player.up()};
+        return function() {return self.player.up()};
       case Gamespace.RIGHT_CODE:
-        return function() {return this.player.right()};
+        return function() {return self.player.right()};
       case Gamespace.DOWN_CODE:
-        return function() {return this.player.down()};
+        return function() {return self.player.down()};
     }
 
     return function() {};

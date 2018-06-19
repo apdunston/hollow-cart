@@ -27,13 +27,13 @@
   var maze = null;
   var hollowCart = new HollowCart();
   $('.start-game').click(function() {
-    var foo = {keyDown: function(event) {console.log("keydown " + event.keyCode);}};
-
-    if (maze == null) {
-      maze = hollowCart.startMultiplayerMazeGame(maze, foo);
-    } else {
-      maze = hollowCart.startMultiplayerMazeGame(maze);
-    }
+    var networkDriver = {
+      setMazeGame: function() {},
+      send: function() {},
+      receive: function() {}
+    };
+    
+    maze = hollowCart.startMultiplayerMazeGame(maze, networkDriver);
   });
 </script>
 </body>

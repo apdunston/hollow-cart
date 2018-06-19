@@ -5,7 +5,7 @@ var MultiplayerOnlineMazeGame = require('../games/multiplayerOnlineMazeGame.js')
 var DisplayDriver = require('../drivers/displayDriver.js');
 
 module.exports = function() {
-  var MultiplayerOnlineGameMaster = function MultiplayerOnlineGameMaster(canvas1, canvas2, keyboardDriver, soundDriver, networkListener) {
+  var MultiplayerOnlineGameMaster = function MultiplayerOnlineGameMaster(canvas1, canvas2, keyboardDriver, soundDriver, networkDriver) {
     GameMaster.call(this); // super()
     var gridLength = 10;
     var squareLength = 20;
@@ -16,8 +16,8 @@ module.exports = function() {
     display1.setColor("black");
     var display2 = new Display(new DisplayDriver(canvas2), displaySpeed);
     display2.setColor("black");
-    this.networkListener = networkListener;
-    this.addGame(new MultiplayerOnlineMazeGame(keyboardDriver, display1, display2, gridLength, squareLength, networkListener));
+    this.networkDriver = networkDriver;
+    this.addGame(new MultiplayerOnlineMazeGame(keyboardDriver, display1, display2, gridLength, squareLength, networkDriver));
   }; 
 
   /**

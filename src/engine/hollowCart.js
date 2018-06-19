@@ -25,9 +25,9 @@ module.exports = function() {
     return this.startTwoPlayer(maze);
   };
 
-  HollowCart.prototype.startMultiplayerMazeGame = function (maze, networkListener) {
+  HollowCart.prototype.startMultiplayerMazeGame = function (maze, networkDriver) {
     this.keyboardDriver = new KeyboardDriver(document);
-    return this.startMultiplayer(maze, networkListener);
+    return this.startMultiplayer(maze, networkDriver);
   };
 
   HollowCart.prototype.addRemoteKeyDownListener = function(listener) {
@@ -57,7 +57,7 @@ module.exports = function() {
     return this.gameMaster.getCurrentGame().getMaze();
   };
 
-  HollowCart.prototype.startMultiplayer = function (maze, networkListener) {
+  HollowCart.prototype.startMultiplayer = function (maze, networkDriver) {
     if (this.gameMaster != null) {
       this.gameMaster.stop();
     }
@@ -75,7 +75,9 @@ module.exports = function() {
     // TODO - implement keyPushListeners
     var soundDriver = null;
 
-    this.gameMaster = new MultiplayerOnlineGameMaster(canvas1, canvas2, this.keyboardDriver, soundDriver, networkListener);  
+    var networkDriver
+
+    this.gameMaster = new MultiplayerOnlineGameMaster(canvas1, canvas2, this.keyboardDriver, soundDriver, networkDriver);  
     this.gameMaster.start(maze);
     return this.gameMaster.getCurrentGame().getMaze();
   };

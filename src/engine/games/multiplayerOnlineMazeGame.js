@@ -15,7 +15,7 @@ var Firework = require('../effects/firework.js');
 
 module.exports = function () {
   var MultiplayerOnlineMazeGame = function MultiplayerOnlineMazeGame(keyboardDriver, mazeDisplay, neuralDisplay, 
-      gridLength, squareLength, networkListener, playerNumber) {
+      gridLength, squareLength, networkDriver, playerNumber) {
     var self = this;
     Game.call(self);
     this.gridLength = gridLength;
@@ -25,12 +25,12 @@ module.exports = function () {
     this.gameLoopsPerSecond = 8;
     this.displays = [mazeDisplay, neuralDisplay];
     this.keyboardDriver = keyboardDriver;
-    this.networkListener = networkListener;
-    networkListener.setMazeGame(this);
+    this.networkDriver = networkDriver;
+    networkDriver.setMazeGame(this);
     this.playerNumber = playerNumber || 1;
   };
 
-  MultiplayerOnlineMazeGame.prototype = Object.create(Game.prototype);
+  MultiplayerOnlineMazeGame.prototype = Object.create(MazeGame.prototype);
 
   MultiplayerOnlineMazeGame.prototype.start = function (maze) {
     var self = this;
@@ -103,41 +103,6 @@ module.exports = function () {
     return this.maze;
   }
 
-  MultiplayerOnlineMazeGame.prototype.keyDown = function (evt) {
-    switch (evt.keyCode) {
-      case Gamespace.LEFT_CODE:
-        this.player.left();
-        break;
-      case Gamespace.UP_CODE:
-        this.player.up();
-        break;
-      case Gamespace.RIGHT_CODE:
-        this.player.right();
-        break;
-      case Gamespace.DOWN_CODE:
-        this.player.down();
-        break;
-      case Gamespace.A_CODE:
-        this.player2.left();
-        break;
-      case Gamespace.W_CODE:
-        this.player2.up();
-        break;
-      case Gamespace.D_CODE:
-        this.player2.right();
-        break;
-      case Gamespace.S_CODE:
-        this.player2.down();
-        break;
-    }
-
-    this.drawLoop();
-
-    if (this.winCondition()) {
-      this.win();
-    }
-  };
-
   MultiplayerOnlineMazeGame.prototype.winCondition = function () {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1;
   };
@@ -151,8 +116,8 @@ module.exports = function () {
   };
 
   MultiplayerOnlineMazeGame.prototype.successfulMoveEvent = function () {
-    if (this.networkListener != null) {
-      this.networkListener.send({
+    if (this.networkDriver != null) {
+      this.networkDriver.send({
         x: this.player.x,
         y: this.player.y,
         playerNumber: this.playerNumber
