@@ -27,7 +27,7 @@
   var maze = null;
   var hollowCart = new HollowCart();
   $('.start-game').click(function() {
-    var foo = {keyDown: function(event) {console.log("keydown " + event.keyCode);}};
+    var foo = {keyDown: function(event) {}};
 
     if (maze == null) {
       maze = hollowCart.startTwoPlayerRemote(maze, foo);

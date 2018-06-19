@@ -93,16 +93,16 @@ module.exports = function () {
     return this.y;
   };
   Entity.prototype.up = function () {
-    this.move(Gamespace.UP);
+    return this.move(Gamespace.UP);
   };
   Entity.prototype.down = function () {
-    this.move(Gamespace.DOWN);
+    return this.move(Gamespace.DOWN);
   };
   Entity.prototype.left = function () {
-    this.move(Gamespace.LEFT);
+    return this.move(Gamespace.LEFT);
   };
   Entity.prototype.right = function () {
-    this.move(Gamespace.RIGHT);
+    return this.move(Gamespace.RIGHT);
   };
   Entity.prototype.isDone = function () {
     return false;

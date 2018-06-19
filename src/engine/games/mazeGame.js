@@ -68,27 +68,39 @@ module.exports = function () {
     return this.player;
   };
 
-  MazeGame.prototype.keyDown = function (evt) {
+  MazeGame.prototype.getMoveForEvent = function(evt) {
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
-        this.player.left();
-        break;
+        return function() {return this.player.left()};
       case Gamespace.UP_CODE:
-        this.player.up();
-        break;
+        return function() {return this.player.up()};
       case Gamespace.RIGHT_CODE:
-        this.player.right();
-        break;
+        return function() {return this.player.right()};
       case Gamespace.DOWN_CODE:
-        this.player.down();
-        break;
+        return function() {return this.player.down()};
     }
 
-    this.drawLoop();
+    return function() {};
+  }
 
-    if (this.winCondition()) {
-      this.win();
+  MazeGame.prototype.performMove = function(repeat, move) {
+    var self = this;
+    var success = move();
+    self.drawLoop();
+    if (self.winCondition()) {
+      self.win();
     }
+
+    if (repeat && success) {
+      setTimeout(function() {self.performMove(true, move);}, 20);
+    } else {
+      return success;
+    }
+  };
+
+  MazeGame.prototype.keyDown = function (evt) {
+    var move = this.getMoveForEvent(evt);
+    var success = this.performMove(evt.shiftKey, move);
   };
 
   MazeGame.prototype.winCondition = function () {

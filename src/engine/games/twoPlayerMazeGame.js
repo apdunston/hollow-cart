@@ -27,7 +27,7 @@ module.exports = function () {
     this.keyboardDriver = keyboardDriver;
   };
 
-  TwoPlayerMazeGame.prototype = Object.create(Game.prototype);
+  TwoPlayerMazeGame.prototype = Object.create(MazeGame.prototype);
 
   TwoPlayerMazeGame.prototype.start = function (maze) {
     var self = this;
@@ -87,40 +87,29 @@ module.exports = function () {
     return this.maze;
   }
 
-  TwoPlayerMazeGame.prototype.keyDown = function (evt) {
+  TwoPlayerMazeGame.prototype.getMoveForEvent = function(evt) {
+    var self = this;
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
-        this.player.left();
-        break;
+        return function() {return self.player.left()};
       case Gamespace.UP_CODE:
-        this.player.up();
-        break;
+        return function() {return self.player.up()};
       case Gamespace.RIGHT_CODE:
-        this.player.right();
-        break;
+        return function() {return self.player.right()};
       case Gamespace.DOWN_CODE:
-        this.player.down();
-        break;
+        return function() {return self.player.down()};
       case Gamespace.A_CODE:
-        this.player2.left();
-        break;
+        return function() {return self.player2.left()};
       case Gamespace.W_CODE:
-        this.player2.up();
-        break;
+        return function() {return self.player2.up()};
       case Gamespace.D_CODE:
-        this.player2.right();
-        break;
+        return function() {return self.player2.right()};
       case Gamespace.S_CODE:
-        this.player2.down();
-        break;
+        return function() {return self.player2.down()};
     }
 
-    this.drawLoop();
-
-    if (this.winCondition()) {
-      this.win();
-    }
-  };
+    return function() {};
+  }
 
   TwoPlayerMazeGame.prototype.winCondition = function () {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1 || this.player2.x === this.gridLength - 1 && this.player2.y === this.gridLength - 1;
