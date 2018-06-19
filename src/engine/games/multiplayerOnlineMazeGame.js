@@ -129,19 +129,6 @@ module.exports = function () {
     }
   };
 
-  MultiplayerOnlineMazeGame.prototype.validMoves = function (x, y) {
-    moves = [Gamespace.UP, Gamespace.DOWN, Gamespace.LEFT, Gamespace.RIGHT];
-    validMoves = [];
-
-    for (var i = 0; i < moves.length; i++) {
-      if (this.validMove(x, y, moves[i])) {
-        validMoves.push(moves[i]);
-      }
-    }
-
-    return validMoves;
-  };
-
   // positions come in as a list of objects:
   // {number: 1, x: 8, y: 5}
   // Wipe out all players but the primary.

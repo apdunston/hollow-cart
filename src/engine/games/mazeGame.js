@@ -85,7 +85,21 @@ module.exports = function () {
     return function() {};
   }
 
-  MazeGame.prototype.performMove = function(repeat, move) {
+  var continueMovement = function(self, move, success) {
+    var validMoves = self.validMoves(self.player.getX(), self.player.getY());
+
+    if (success && validMoves.length === 2) {
+      if (self.timeout != null) {
+        clearTimeout(self.timeout)
+      }
+
+      self.timeout = setTimeout(function() {self.performMove(move);}, 20);
+    } else {
+      return success;
+    }
+  };
+
+  MazeGame.prototype.performMove = function(move) {
     var self = this;
     var success = move();
     self.drawLoop();
@@ -93,16 +107,12 @@ module.exports = function () {
       self.win();
     }
 
-    if (repeat && success) {
-      setTimeout(function() {self.performMove(true, move);}, 20);
-    } else {
-      return success;
-    }
+    continueMovement(self, move, success);
   };
 
   MazeGame.prototype.keyDown = function (evt) {
     var move = this.getMoveForEvent(evt);
-    var success = this.performMove(evt.shiftKey, move);
+    var success = this.performMove(move);
   };
 
   MazeGame.prototype.winCondition = function () {
@@ -125,8 +135,8 @@ module.exports = function () {
   };
 
   MazeGame.prototype.validMoves = function (x, y) {
-    moves = [Gamespace.UP, Gamespace.DOWN, Gamespace.LEFT, Gamespace.RIGHT];
-    validMoves = [];
+    var moves = [Gamespace.UP, Gamespace.DOWN, Gamespace.LEFT, Gamespace.RIGHT];
+    var validMoves = [];
 
     for (var i = 0; i < moves.length; i++) {
       if (this.validMove(x, y, moves[i])) {

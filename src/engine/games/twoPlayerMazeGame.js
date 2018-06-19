@@ -130,18 +130,5 @@ module.exports = function () {
     this.neuralDisplay.addObject(new Firework(this.neuralDisplay.getLength()));
   };
 
-  TwoPlayerMazeGame.prototype.validMoves = function (x, y) {
-    moves = [Gamespace.UP, Gamespace.DOWN, Gamespace.LEFT, Gamespace.RIGHT];
-    validMoves = [];
-
-    for (var i = 0; i < moves.length; i++) {
-      if (this.validMove(x, y, moves[i])) {
-        validMoves.push(moves[i]);
-      }
-    }
-
-    return validMoves;
-  };
-
   return TwoPlayerMazeGame;
 }();
