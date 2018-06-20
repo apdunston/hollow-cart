@@ -8,6 +8,10 @@
 var Game = require('./game.js');
 var MazeData = require('../mazeData.js');
 var Gamespace = require('../gamespace.js');
+var Maze = require('../gameObjects/maze.js');
+var Player = require('../gameObjects/player.js');
+var Circle = require('../drawableObjects/circle.js');
+var Firework = require('../effects/firework.js');
 
 module.exports = function () {
   var MazeGame = function MazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, squareLength) {
@@ -47,9 +51,9 @@ module.exports = function () {
     this.map = MazeData.generate(this.gridLength, this.gridLength);
     this.drawMap = MazeData.translate(this.map);
     this.maze = new Maze(this.drawMap, this.squareLength);
-    this.player = new MazeGame.Player(this.gridLength, this.squareLength, this);
+    this.player = new Player(this.gridLength, this.squareLength, this);
     var goalSquareLocation = this.gridLength * this.squareLength - this.squareLength / 2;
-    this.goalObject = new DrawableCircle(goalSquareLocation, goalSquareLocation, this.squareLength / 4, "green");
+    this.goalObject = new Circle(goalSquareLocation, goalSquareLocation, this.squareLength / 4, "green");
     this.clearDisplays();
   };
 

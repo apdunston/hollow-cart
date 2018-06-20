@@ -2,6 +2,7 @@
 var GameMaster = require("./gameMaster.js");
 var Display = require('../display.js');
 var HallGame = require('../games/hallGame.js');
+var MazeGame = require('../games/mazeGame.js');
 var DisplayDriver = require('../drivers/displayDriver.js');
 
 /**
@@ -32,7 +33,7 @@ module.exports = function() {
 
     this.addGame(new HallGame(keyboardDriver, display1, display2, gridLength, hallLength, squareLength));
     // this.addGame(new RemedialGame(keyboardDriver, display1, display2, gridLength, hallLength, squareLength));
-    // this.addGame(new MazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
+    this.addGame(new MazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
     // this.addGame(new MazeGame.SplitMazeGame(keyboardDriver, display1, display2, display3, gridLength, squareLength));
     // this.addGame(new MazeGame.LightningMazeGame(keyboardDriver, reverseLightningDisplay, display3, gridLength, squareLength));
     // this.addGame(new MazeGame.LightningMazeGame(keyboardDriver, lightningDisplay, display3, gridLength, squareLength));
