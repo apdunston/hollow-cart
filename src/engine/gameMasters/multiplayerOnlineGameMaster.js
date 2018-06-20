@@ -7,7 +7,7 @@ var DisplayDriver = require('../drivers/displayDriver.js');
 module.exports = function() {
   var MultiplayerOnlineGameMaster = function MultiplayerOnlineGameMaster(canvas1, canvas2, keyboardDriver, soundDriver, networkDriver) {
     GameMaster.call(this); // super()
-    var gridLength = 10;
+    var gridLength = 20;
     var squareLength = 20;
     var hallLength = 6;
 

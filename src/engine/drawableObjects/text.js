@@ -1,6 +1,8 @@
 "use strict";
 
 var DrawableObject = require('./drawableObject.js');
+var Font = require('./font.js');
+var DisplayConstants = require('../enums/displayConstants.js');
 
 module.exports = function() {
   // Constructor calls super

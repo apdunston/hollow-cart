@@ -1,7 +1,8 @@
 "use strict";
 
-module.exports = function () {
+var Font = require('../drawableObjects/font.js');
 
+module.exports = function () {
   var _alphaWrap = function _alphaWrap(self, alpha, fn) {
     if (alpha !== undefined) {
       self.context.globalAlpha = alpha;

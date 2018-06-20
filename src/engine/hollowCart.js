@@ -5,6 +5,7 @@ var KeyboardDriver = require('./drivers/keyboardDriver.js');
 var RemoteKeyboardDriver = require('./drivers/remoteKeyboardDriver.js');
 var TwoPlayerGameMaster = require('./gameMasters/twoPlayerGameMaster.js');
 var MultiplayerOnlineGameMaster = require('./gameMasters/multiplayerOnlineGameMaster.js');
+var NeuralActivityGameMaster = require('./gameMasters/neuralActivityGameMaster.js');
 
 module.exports = function() {
   var HollowCart = function() {
@@ -81,6 +82,29 @@ module.exports = function() {
     this.gameMaster.start(maze);
     return this.gameMaster.getCurrentGame().getMaze();
   };
+
+  HollowCart.prototype.startNeuralActivity = function () {
+    var canv, display1, display2, display3, display4, mazeGame, 
+      canvasLength, canvas1, canvas2, canvas3, canvas4, canvas5, 
+      canvas6, keyboardDriver, soundDriver, gameMaster;
+    canvasLength = 400;
+
+    $('canvas').attr('height', canvasLength).attr('width', canvasLength);
+
+    canvas1 = document.getElementById("canvas1");
+    canvas2 = document.getElementById("canvas2");
+    canvas3 = document.getElementById("canvas3");
+    canvas4 = document.getElementById("canvas4");
+    canvas5 = document.getElementById("canvas5");
+    canvas6 = document.getElementById("canvas6");
+
+    // TODO - implement keyPushListeners
+    keyboardDriver = new KeyboardDriver(document);
+    soundDriver = null;
+
+    gameMaster = new NeuralActivityGameMaster(canvas1, canvas2, canvas3, canvas4, canvas5, canvas6, keyboardDriver, soundDriver);
+  }
+
 
   return HollowCart;
 }();

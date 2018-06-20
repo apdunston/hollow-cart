@@ -29,23 +29,27 @@ module.exports = function() {
   };
 
   GameMaster.prototype.next = function () {
+    this.stopCurrentGame();
+
     if (this.onLastGame()) {
-      this.stop();
-      return;
+      this.currentGameIndex = -1;
+      // this.stop();
+      // return;
     }
 
-    this.stopCurrentGame();
     this.currentGameIndex += 1;
     this.startCurrentGame();
   };
 
   GameMaster.prototype.previous = function () {
+    this.stopCurrentGame();
+
     if (this.onFirstGame()) {
-      this.stop();
-      return;
+      this.currentGameIndex = this.games.length;
+      // this.stop();
+      // return;
     }
 
-    this.stopCurrentGame();
     this.currentGameIndex -= 1;
     this.startCurrentGame();
   };

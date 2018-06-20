@@ -1,6 +1,8 @@
 "use strict";
 
 var DrawableObject = require('./drawableObject.js');
+var DisplayConstants = require('../enums/displayConstants.js');
+var Font = require('./font.js');
 
 module.exports = function() {
   var TypedTextState = {
