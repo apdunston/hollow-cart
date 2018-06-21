@@ -27,7 +27,10 @@ module.exports = function () {
     this.keyboardDriver = keyboardDriver;
     this.networkDriver = networkDriver;
     networkDriver.setMazeGame(this);
-    this.playerNumber = playerNumber || 1;
+    this.playerNumber = playerNumber;
+    if (playerNumber == null) {
+      throw("Player number cannot be null");
+    }
   };
 
   MultiplayerOnlineMazeGame.prototype = Object.create(MazeGame.prototype);
@@ -54,6 +57,8 @@ module.exports = function () {
 
   MultiplayerOnlineMazeGame.prototype.addPlayer = function (x, y) {
     var player = new Player(this.gridLength, this.squareLength, this);
+    console.log("Set new player positions x", x);
+    console.log("Set new player positions y", y);
     player.setPosition(x || 0, y || 0);
     
     if (this.players.length == 0) {
@@ -135,9 +140,12 @@ module.exports = function () {
   // Add players one by one.
   // Reset the display to draw the new state of affairs.
   MultiplayerOnlineMazeGame.prototype.setPositions = function(positions) {
+    console.log("Positions", positions);
     this.players = [this.players[0]];
     for (var x = 0; x < positions.length; x++) {
+      console.log("Index: ", x)
       if (positions[x].number == this.playerNumber) {
+        console.log("positions[x].number == this.playerNumber " + positions[x].number + " == " + this.playerNumber);
         continue;
       }
 
