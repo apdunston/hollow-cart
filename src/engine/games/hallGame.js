@@ -13,7 +13,7 @@ var Circle = require("../drawableObjects/circle.js");
 var TypedText = require("../drawableObjects/typedText.js");
 
 module.exports = function() {
-  let HallGameStates = {
+  var HallGameStates = {
     BEGINNING: 1,
     MIDDLE: 2,
     END: 3
