@@ -4,6 +4,7 @@ var Display = require('../display.js');
 var HallGame = require('../games/hallGame.js');
 var MazeGame = require('../games/mazeGame.js');
 var DisplayDriver = require('../drivers/displayDriver.js');
+var SplitMazeGame = require('../games/splitMazeGame.js');
 
 /**
  * Interface GameMaster
@@ -11,7 +12,7 @@ var DisplayDriver = require('../drivers/displayDriver.js');
 module.exports = function() {
   var NeuralActivityGameMaster = function NeuralActivityGameMaster(canvas1, canvas2, canvas3, canvas4, canvas5, canvas6, keyboardDriver, soundDriver) {
     GameMaster.call(this); // super()
-    var gridLength = 20;
+    var gridLength = 10;
     var squareLength = 20;
     var hallLength = 6;
 
@@ -34,7 +35,7 @@ module.exports = function() {
     this.addGame(new HallGame(keyboardDriver, display1, display2, gridLength, hallLength, squareLength));
     // this.addGame(new RemedialGame(keyboardDriver, display1, display2, gridLength, hallLength, squareLength));
     this.addGame(new MazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
-    // this.addGame(new MazeGame.SplitMazeGame(keyboardDriver, display1, display2, display3, gridLength, squareLength));
+    this.addGame(new SplitMazeGame(keyboardDriver, display1, display2, display3, gridLength, squareLength));
     // this.addGame(new MazeGame.LightningMazeGame(keyboardDriver, reverseLightningDisplay, display3, gridLength, squareLength));
     // this.addGame(new MazeGame.LightningMazeGame(keyboardDriver, lightningDisplay, display3, gridLength, squareLength));
     // this.addGame(new ChaseMazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
