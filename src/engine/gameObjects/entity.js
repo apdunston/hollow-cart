@@ -36,9 +36,9 @@ module.exports = function () {
     this.gridLength = gridLength;
     this.game = game;
     this.squareLength = squareLength;
-    var shrinkage = 5;
+    var shrinkage = Math.floor(this.squareLength/3);
     var size = squareLength - shrinkage;
-    this.bump = shrinkage / 2;
+    this.bump = Math.floor(shrinkage / 2);
     this.gridTranslator = gridTranslator || new GridTranslator(0, 0, squareLength);
     this.square = new Square(0, 0, size, this.color);
     this.positionDrawableObject();
