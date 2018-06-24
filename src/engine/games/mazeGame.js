@@ -14,7 +14,8 @@ var Circle = require('../drawableObjects/circle.js');
 var Firework = require('../effects/firework.js');
 
 module.exports = function () {
-  var MazeGame = function MazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, squareLength) {
+  var MazeGame = function MazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, 
+      squareLength) {
     var self = this;
     Game.call(self);
     this.gridLength = gridLength;
@@ -24,9 +25,29 @@ module.exports = function () {
     this.gameLoopsPerSecond = 8;
     this.displays = [mazeDisplay, neuralDisplay];
     this.keyboardDriver = keyboardDriver;
+    this.networkDriver = null;
   };
 
   MazeGame.prototype = Object.create(Game.prototype);
+
+  MazeGame.prototype.setGridLength = function(gridLength) {
+    this.gridLength = gridLength;    
+    return this;
+  }
+
+  MazeGame.prototype.setSquareLength = function(squareLength) {
+    this.squareLength = squareLength;    
+    return this;
+  }
+
+  MazeGame.prototype.setNetworkDriver = function(networkDriver) {
+    this.networkDriver = networkDriver;    
+    return this;
+  }
+
+  MazeGame.prototype.getMaze = function() {
+    return this.maze;
+  }
 
   MazeGame.prototype.start = function () {
     var self = this;
@@ -128,7 +149,7 @@ module.exports = function () {
     this.won = true;
     this.mazeDisplay.flash("blue", 500, function () {
       self.gameEnd({ won: true });
-    });
+    });    
   };
 
   MazeGame.prototype.successfulMoveEvent = function () {

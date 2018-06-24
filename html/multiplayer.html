@@ -28,12 +28,12 @@
   var hollowCart = new HollowCart();
   $('.start-game').click(function() {
     var networkDriver = {
-      setMazeGame: function() {},
+      setGame: function() {},
       send: function() {},
       receive: function() {}
     };
     
-    maze = hollowCart.startMultiplayerMazeGame(maze, networkDriver, 1);
+    maze = hollowCart.startMultiplayer(maze, networkDriver, 1);
   });
 </script>
 </body>

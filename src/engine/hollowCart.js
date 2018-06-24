@@ -6,6 +6,7 @@ var Hammer = require("hammerjs");
 var KeyboardDriver = require('./drivers/keyboardDriver.js');
 var TwoPlayerGameMaster = require('./gameMasters/twoPlayerGameMaster.js');
 var MultiplayerOnlineGameMaster = require('./gameMasters/multiplayerOnlineGameMaster.js');
+var MazeGameMaster = require('./gameMasters/mazeGameMaster.js');
 var NeuralActivityGameMaster = require('./gameMasters/neuralActivityGameMaster.js');
 var Gamespace = require('./gamespace.js');
 
@@ -49,14 +50,6 @@ module.exports = function() {
   
   HollowCart.prototype.constructor = HollowCart;
 
-  HollowCart.prototype.startTwoPlayerLocal = function (maze) {
-    return this.startTwoPlayer(maze);
-  };
-
-  HollowCart.prototype.startMultiplayerMazeGame = function (maze, networkDriver, playerNumber) {
-    return this.startMultiplayer(maze, networkDriver, playerNumber);
-  };
-
   HollowCart.prototype.startTwoPlayer = function (maze) {
     if (this.gameMaster != null) {
       this.gameMaster.stop();
@@ -81,6 +74,7 @@ module.exports = function() {
   };
 
   HollowCart.prototype.startMultiplayer = function (maze, networkDriver, playerNumber) {
+    console.log("Starting multiplayer with networkDriver: ", networkDriver);
     if (this.gameMaster != null) {
       this.gameMaster.stop();
     }
@@ -95,14 +89,17 @@ module.exports = function() {
     var canvas1 = $("#canvas1")[0];
     var canvas2 = $("#canvas2")[0];
 
-    // TODO - implement keyPushListeners
     var soundDriver = null;
 
-    var networkDriver
-
-    this.gameMaster = new MultiplayerOnlineGameMaster(canvas1, canvas2, this.keyboardDriver, 
-      soundDriver, networkDriver, playerNumber);  
-    this.gameMaster.start(maze);
+    this.gameMaster = new MazeGameMaster(canvas1, canvas2, this.keyboardDriver);  
+    this.gameMaster
+      .setGridLength(12)
+      .setSquareLength(30)
+      .setSoundDriver(soundDriver)
+      .setPlayerNumber(playerNumber)
+      .setNetworkDriver(networkDriver)
+      .addMultiplayerOnlineMazeGame()
+      .start(maze);
     return this.gameMaster.getCurrentGame().getMaze();
   };
 
@@ -160,6 +157,10 @@ module.exports = function() {
 
   HollowCart.prototype.previous = function () {
     this.gameMaster.previous();
+  }
+
+  HollowCart.prototype.getCurrentGame = function () {
+    return this.gameMaster.getCurrentGame();
   }
 
   return HollowCart;

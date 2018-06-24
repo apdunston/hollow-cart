@@ -15,12 +15,13 @@ module.exports = function() {
   GameMaster.prototype.addGame = function (game) {
     this.games.push(game);
     game.addGameEndListener(this);
+    return this;
   };
 
-  GameMaster.prototype.start = function () {
+  GameMaster.prototype.start = function (data) {
     this.stopCurrentGame();
     this.currentGameIndex = 0;
-    this.startCurrentGame();
+    this.startCurrentGame(data);
   };
 
   GameMaster.prototype.stop = function () {
@@ -28,30 +29,26 @@ module.exports = function() {
     this.currentGameIndex = null;
   };
 
-  GameMaster.prototype.next = function () {
+  GameMaster.prototype.next = function (data) {
     this.stopCurrentGame();
 
     if (this.onLastGame()) {
       this.currentGameIndex = -1;
-      // this.stop();
-      // return;
     }
 
     this.currentGameIndex += 1;
-    this.startCurrentGame();
+    this.startCurrentGame(data);
   };
 
-  GameMaster.prototype.previous = function () {
+  GameMaster.prototype.previous = function (data) {
     this.stopCurrentGame();
 
     if (this.onFirstGame()) {
       this.currentGameIndex = this.games.length;
-      // this.stop();
-      // return;
     }
 
     this.currentGameIndex -= 1;
-    this.startCurrentGame();
+    this.startCurrentGame(data);
   };
 
   GameMaster.prototype.stopCurrentGame = function () {
@@ -60,9 +57,9 @@ module.exports = function() {
     }
   };
 
-  GameMaster.prototype.startCurrentGame = function () {
+  GameMaster.prototype.startCurrentGame = function (data) {
     if (this.currentGameIndex !== null) {
-      this.games[this.currentGameIndex].start();
+      this.games[this.currentGameIndex].start(data);
     }
   };
 

@@ -14,8 +14,8 @@ var Gamespace = require('../gamespace.js');
 var Firework = require('../effects/firework.js');
 
 module.exports = function () {
-  var MultiplayerOnlineMazeGame = function MultiplayerOnlineMazeGame(keyboardDriver, mazeDisplay, neuralDisplay, 
-      gridLength, squareLength, networkDriver, playerNumber) {
+  var MultiplayerOnlineMazeGame = function MultiplayerOnlineMazeGame(keyboardDriver, mazeDisplay, 
+      neuralDisplay, gridLength, squareLength, networkDriver, playerNumber) {
     var self = this;
     Game.call(self);
     this.gridLength = gridLength;
@@ -26,8 +26,10 @@ module.exports = function () {
     this.displays = [mazeDisplay, neuralDisplay];
     this.keyboardDriver = keyboardDriver;
     this.networkDriver = networkDriver;
-    networkDriver.setMazeGame(this);
+    networkDriver.setGame(this);
     this.playerNumber = playerNumber;
+
+    console.log("MultiplayerOnlineMazeGame constructor network driver: ", networkDriver);
     if (playerNumber == null) {
       throw("Player number cannot be null");
     }
@@ -36,8 +38,14 @@ module.exports = function () {
   MultiplayerOnlineMazeGame.prototype = Object.create(MazeGame.prototype);
 
   MultiplayerOnlineMazeGame.prototype.start = function (maze) {
-    var self = this;
-    Game.prototype.start.call(self);
+    Game.prototype.start.call(this);
+    this.reset(maze);
+    this.networkDriver.sendMaze(this.maze);
+  };
+
+  MultiplayerOnlineMazeGame.prototype.setMaze = function(maze) {
+    this.stop();
+    Game.prototype.start.call(this);
     this.reset(maze);
   };
 
@@ -57,8 +65,6 @@ module.exports = function () {
 
   MultiplayerOnlineMazeGame.prototype.addPlayer = function (x, y) {
     var player = new Player(this.gridLength, this.squareLength, this);
-    console.log("Set new player positions x", x);
-    console.log("Set new player positions y", y);
     player.setPosition(x || 0, y || 0);
     
     if (this.players.length == 0) {
@@ -115,19 +121,19 @@ module.exports = function () {
   MultiplayerOnlineMazeGame.prototype.win = function () {
     var self = this;
     this.won = true;
+    this.networkDriver.sendWin(this.playerNumber);
     this.mazeDisplay.flash("blue", 500, function () {
       self.gameEnd({ won: true });
     });
   };
 
   MultiplayerOnlineMazeGame.prototype.successfulMoveEvent = function () {
-    if (this.networkDriver != null) {
-      this.networkDriver.send({
-        x: this.player.x,
-        y: this.player.y,
-        playerNumber: this.playerNumber
-      });
-    }
+    console.log("Sending move...");
+    this.networkDriver.send({
+      x: this.player.x,
+      y: this.player.y,
+      playerNumber: this.playerNumber
+    });
 
     if (this.neuralDisplay != null) {
       this.neuralDisplay.addObject(new Firework(this.neuralDisplay.getLength()));
@@ -140,12 +146,9 @@ module.exports = function () {
   // Add players one by one.
   // Reset the display to draw the new state of affairs.
   MultiplayerOnlineMazeGame.prototype.setPositions = function(positions) {
-    console.log("Positions", positions);
     this.players = [this.players[0]];
     for (var x = 0; x < positions.length; x++) {
-      console.log("Index: ", x)
       if (positions[x].number == this.playerNumber) {
-        console.log("positions[x].number == this.playerNumber " + positions[x].number + " == " + this.playerNumber);
         continue;
       }
 
