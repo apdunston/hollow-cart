@@ -31,7 +31,6 @@ module.exports = function () {
   MazeGame.prototype = Object.create(Game.prototype);
 
   MazeGame.prototype.setGridLength = function(gridLength) {
-    console.log("set grid length from " + this.gridLength + " to " + gridLength);
     this.gridLength = gridLength;    
     return this;
   }

@@ -75,14 +75,30 @@ module.exports = function() {
     return this.gameMaster.getCurrentGame().getMaze();
   };
 
-  HollowCart.prototype.startMultiplayer = function(maze, networkDriver, playerNumber) {
-    console.log("Starting multiplayer with networkDriver: ", networkDriver);
-    var md = new MobileDetect(window.navigator.userAgent);
+  HollowCart.prototype.zoomOutMobile = function() {
+    const viewport = document.querySelector('meta[name="viewport"]');
 
-    var canvasLength = md.mobile() ? 900 : 400;
+    if ( viewport ) {
+      viewport.content = 'initial-scale=1';
+      viewport.content = 'width=device-width';
+    }
+  }
+
+  HollowCart.prototype.startMultiplayer = function(maze, networkDriver, playerNumber, detectMobile) {
+    // var md = new MobileDetect(window.navigator.userAgent);
+    // var canvasLength = detectMobile && md.mobile() ? 900 : 400;
+    var canvasLength = window.innerWidth;
+    if (window.innerHeight < canvasLength) {
+      canvasLength = window.innerHeight;
+    }
+
+    canvasLength = canvasLength - 5;
+
     var gridLength = 12;
 
     this.createGameMaster(maze, networkDriver, playerNumber, canvasLength, gridLength);
+    // this.zoomOutMobile();
+
     return this.gameMaster.getCurrentGame().getMaze();
   }
 
@@ -112,6 +128,7 @@ module.exports = function() {
       .setSquareLength(Math.floor(canvasLength / gridLength))
       .start(maze);
   };
+
 
   HollowCart.prototype.startNeuralActivity = function () {
     var canv, display1, display2, display3, display4, mazeGame, 

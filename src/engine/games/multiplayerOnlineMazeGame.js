@@ -29,7 +29,6 @@ module.exports = function () {
     networkDriver.setGame(this);
     this.playerNumber = playerNumber;
 
-    console.log("MultiplayerOnlineMazeGame constructor network driver: ", networkDriver);
     if (playerNumber == null) {
       throw("Player number cannot be null");
     }
@@ -38,10 +37,8 @@ module.exports = function () {
   MultiplayerOnlineMazeGame.prototype = Object.create(MazeGame.prototype);
 
   MultiplayerOnlineMazeGame.prototype.start = function (maze) {
-    console.log("starting gridlength: ", this.gridLength);
     Game.prototype.start.call(this);
     this.reset(maze);
-    console.log(this.networkDriver);
     this.networkDriver.sendMaze(this.maze);
   };
 

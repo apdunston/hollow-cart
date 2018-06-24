@@ -50,8 +50,6 @@ module.exports = function() {
   }
 
   MazeGameMaster.prototype.setGridLength = function(gridLength) {
-    console.log("set master grid length from " + this.gridLength + " to " + gridLength);
-    
     this.gridLength = gridLength;    
     for (var x = 0; x < this.games.length; x++) {
       this.games[x].setGridLength(gridLength);
