@@ -27,13 +27,7 @@
   var maze = null;
   var hollowCart = new HollowCart();
   $('.start-game').click(function() {
-    var networkDriver = {
-      setGame: function() {},
-      send: function() {},
-      receive: function() {}
-    };
-    
-    maze = hollowCart.startMultiplayer(maze, networkDriver, 1);
+    maze = hollowCart.startMultiplayer(maze, null, 1);
   });
 </script>
 </body>

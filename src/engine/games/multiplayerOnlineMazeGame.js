@@ -38,8 +38,10 @@ module.exports = function () {
   MultiplayerOnlineMazeGame.prototype = Object.create(MazeGame.prototype);
 
   MultiplayerOnlineMazeGame.prototype.start = function (maze) {
+    console.log("starting gridlength: ", this.gridLength);
     Game.prototype.start.call(this);
     this.reset(maze);
+    console.log(this.networkDriver);
     this.networkDriver.sendMaze(this.maze);
   };
 
@@ -128,7 +130,6 @@ module.exports = function () {
   };
 
   MultiplayerOnlineMazeGame.prototype.successfulMoveEvent = function () {
-    console.log("Sending move...");
     this.networkDriver.send({
       x: this.player.x,
       y: this.player.y,

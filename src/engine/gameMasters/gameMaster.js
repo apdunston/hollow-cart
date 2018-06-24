@@ -15,6 +15,7 @@ module.exports = function() {
   GameMaster.prototype.addGame = function (game) {
     this.games.push(game);
     game.addGameEndListener(this);
+    console.log("added game. Games length: " + this.games.length)
     return this;
   };
 

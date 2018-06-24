@@ -38,7 +38,7 @@ module.exports = function() {
 
   MazeGameMaster.prototype.setNetworkDriver = function(networkDriver) {
     this.networkDriver = networkDriver;    
-    for (var x; x < this.games.length; x++) {
+    for (var x = 0; x < this.games.length; x++) {
       this.games[x].setNetworkDriver(networkDriver);
     }    
     return this;
@@ -50,8 +50,10 @@ module.exports = function() {
   }
 
   MazeGameMaster.prototype.setGridLength = function(gridLength) {
+    console.log("set master grid length from " + this.gridLength + " to " + gridLength);
+    
     this.gridLength = gridLength;    
-    for (var x; x < this.games.length; x++) {
+    for (var x = 0; x < this.games.length; x++) {
       this.games[x].setGridLength(gridLength);
     }
     return this;
@@ -59,7 +61,7 @@ module.exports = function() {
 
   MazeGameMaster.prototype.setSquareLength = function(squareLength) {
     this.squareLength = squareLength;    
-    for (var x; x < this.games.length; x++) {
+    for (var x = 0; x < this.games.length; x++) {
       this.games[x].setSquareLength(squareLength);
     }
     return this;
