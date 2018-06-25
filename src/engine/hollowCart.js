@@ -10,7 +10,6 @@ var MultiplayerOnlineGameMaster = require('./gameMasters/multiplayerOnlineGameMa
 var MazeGameMaster = require('./gameMasters/mazeGameMaster.js');
 var NeuralActivityGameMaster = require('./gameMasters/neuralActivityGameMaster.js');
 var Gamespace = require('./gamespace.js');
-var MobileDetect = require('mobile-detect');
 
 module.exports = function() {
   var HollowCart = function() {
@@ -32,18 +31,22 @@ module.exports = function() {
     }
 
     hammer.on("panleft", function( event ) {
+      event.preventDefault();
       doSwipe(Gamespace.LEFT_CODE);
     });
 
     hammer.on("panright", function( event ) {
+      event.preventDefault();
       doSwipe(Gamespace.RIGHT_CODE);
     });
 
     hammer.on("panup", function( event ) {
+      event.preventDefault();
       doSwipe(Gamespace.UP_CODE);
     });
 
     hammer.on("pandown", function( event ) {
+      event.preventDefault();
       doSwipe(Gamespace.DOWN_CODE);
     });
 
@@ -85,14 +88,12 @@ module.exports = function() {
   }
 
   HollowCart.prototype.startMultiplayer = function(maze, networkDriver, playerNumber, detectMobile) {
-    // var md = new MobileDetect(window.navigator.userAgent);
-    // var canvasLength = detectMobile && md.mobile() ? 900 : 400;
     var canvasLength = window.innerWidth;
     if (window.innerHeight < canvasLength) {
       canvasLength = window.innerHeight;
     }
 
-    canvasLength = canvasLength - 5;
+    canvasLength = canvasLength - 75;
 
     var gridLength = 12;
 
