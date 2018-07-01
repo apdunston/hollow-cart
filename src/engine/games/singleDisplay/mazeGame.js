@@ -14,6 +14,8 @@ var Player = require('../../gameObjects/player.js');
 var Circle = require('../../drawableObjects/circle.js');
 var Firework = require('../../effects/firework.js');
 var Sparkle = require('../../effects/sparkle.js');
+var Spark = require('../../effects/spark.js');
+
 
 module.exports = function () {
   var SingleDisplayMazeGame = function SingleDisplayMazeGame(keyboardDriver, display, gridLength, 
@@ -32,6 +34,33 @@ module.exports = function () {
 
   SingleDisplayMazeGame.prototype = Object.create(Game.prototype);
 
+  SingleDisplayMazeGame.prototype.showerOfSparks = function(xMultiplier, yMultiplier) {
+    var self = this;
+    var position = this.translatedPlayerPosition();
+    var sparkLength = Math.ceil(this.squareLength / 3);
+    var x = position[0] + xMultiplier * this.squareLength;
+    var y = position[1] + yMultiplier * this.squareLength;
+    var numSparks = 5;
+    var spread = Math.ceil(this.squareLength * 0.75);
+    var framesDuration = 40;
+
+    var oneSpark = function() {
+      var sparkX = x - Math.floor(Math.random() * spread);
+      var sparkY = y + Math.floor(Math.random() * spread);
+      var distance = Math.sqrt(Math.pow(x - sparkX, 2) + Math.pow(y - sparkY, 2));
+      var distanceInSquares = distance/self.squareLength;
+      var length = sparkLength * distanceInSquares;
+      
+      console.log(distance / self.squareLength);
+      new Spark(self.display, sparkX, sparkY, length, framesDuration, Gamespace.randomColor())
+    }
+
+    for (var i = 0; i < numSparks; i++) {
+      var time = Math.floor(Math.random() * 150);
+      setTimeout(oneSpark, time);
+    }
+  }
+
   SingleDisplayMazeGame.prototype.setGridLength = function(gridLength) {
     this.gridLength = gridLength;    
     return this;
@@ -39,6 +68,7 @@ module.exports = function () {
 
   SingleDisplayMazeGame.prototype.setSquareLength = function(squareLength) {
     this.squareLength = squareLength;    
+    this.gridTranslator = new GridTranslator(0, 0, this.squareLength);
     return this;
   }
 
@@ -100,13 +130,29 @@ module.exports = function () {
     var self = this;
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
-        return function() {return self.player.left()};
+        return function() {
+          var success = self.player.left();          
+          success && self.showerOfSparks(2, 0);
+          return success;
+        };
       case Gamespace.UP_CODE:
-        return function() {return self.player.up()};
+        return function() {
+          var success = self.player.up()
+          success && self.showerOfSparks(1, 1);
+          return success;
+        };
       case Gamespace.RIGHT_CODE:
-        return function() {return self.player.right()};
+        return function() {
+          var success = self.player.right()
+          success && self.showerOfSparks(0, 0);
+          return success;
+        };
       case Gamespace.DOWN_CODE:
-        return function() {return self.player.down()};
+        return function() {
+          var success = self.player.down()
+          success && self.showerOfSparks(1, -0.75);
+          return success;
+        };
     }
 
     return function() {};
@@ -159,9 +205,6 @@ module.exports = function () {
     if (this.display === null) {
       return;
     }
-    var position = this.translatedPlayerPosition();
-    // this.display.addObject(new Sparkle(position[0], position[1], this.squareLength/4, 50));
-    // this.display.addObject(new Firework(self.display.getLength(), self.player.x, self.player.y));
   };
 
   SingleDisplayMazeGame.prototype.translatedPlayerPosition = function() {

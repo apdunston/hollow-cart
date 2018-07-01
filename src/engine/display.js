@@ -96,6 +96,13 @@ module.exports = function() {
     this.backgroundOnly = false;
   };
 
+  Display.prototype.removeObject = function(object) {
+    var index = this.objects.indexOf(object);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
+
   Display.prototype.getLength = function () {
     return this.width;
   };

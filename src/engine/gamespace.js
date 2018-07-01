@@ -29,5 +29,9 @@ module.exports = {
       case Gamespace.RIGHT:
         return Gamespace.LEFT;
     }
+  },
+  randomColor: function() {
+    var index = Math.floor(Math.random() * 7);
+    return this.rainbow[index];
   }
 };
