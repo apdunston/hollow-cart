@@ -9,18 +9,29 @@ var Ring = require('./ring.js');
 var Sparkle = require('./sparkle.js');
 
 module.exports = function() {
-  var Firework = function Firework(canvasLength) {
+  var Firework = function Firework(canvasLength, x, y, sizeMultiplier) {
     this.sparkleDuration = 20;
     this.frameCount = 0;
     this.maxFrameCount = 120;
     this.totalRings = 4;
     this.framesPerNewRing = 8;
     this.canvasLength = canvasLength;
-    this.squareLength = canvasLength / 20 - canvasLength / 200;
+    if (sizeMultiplier == null) {
+      sizeMultiplier = 1;
+    }
+    this.squareLength = (canvasLength / 20 - canvasLength / 200) * sizeMultiplier;
     this.offset = this.squareLength + 2;
 
-    this.x = Math.floor(Math.random() * canvasLength);
-    this.y = Math.floor(Math.random() * canvasLength);
+    this.x = x;
+    this.y = y;
+
+    if (this.x === null) {
+      this.x = Math.floor(Math.random() * canvasLength);
+    }
+
+    if (this.y === null) {
+      this.y = Math.floor(Math.random() * canvasLength);
+    }
 
     this.sparkles = [new Sparkle(this.x, this.y, this.squareLength, this.sparkleDuration)];
     this.rings = [];

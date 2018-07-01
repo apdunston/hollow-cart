@@ -4,11 +4,13 @@ var Display = require('../display.js');
 var MultiplayerOnlineMazeGame = require('../games/multiplayerOnlineMazeGame.js');
 var DisplayDriver = require('../drivers/displayDriver.js');
 var NullNetworkDriver = require('../drivers/nullNetworkDriver.js');
+var MazeGame = require('../games/mazeGame.js');
 
 module.exports = function() {
-  var MazeGameMaster = function MazeGameMaster(canvas1, canvas2,
-      keyboardDriver) {
+  var MazeGameMaster = function MazeGameMaster(canvases, keyboardDriver) {
     GameMaster.call(this); // super()
+    var canvas1 = canvases[0];
+    var canvas2 = canvases[1];
     this.gridLength = 20;
     this.squareLength = 20;
     this.playerNumber = 0;
@@ -72,32 +74,32 @@ module.exports = function() {
   }
 
   MazeGameMaster.prototype.addHallGame = function() {
-    this.addGame(new HallGame(keyboardDriver, display1, display2, gridLength, hallLength, squareLength));
+    this.addGame(new HallGame(this.keyboardDriver, this.display1, this.display2, this.gridLength, this.hallLength, this.squareLength));
     return this;
   }
 
   MazeGameMaster.prototype.addMazeGame = function() {
-    this.addGame(new MazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
+    this.addGame(new MazeGame(this.keyboardDriver, this.display1, this.display3, this.gridLength, this.squareLength));
     return this;
   }
 
   MazeGameMaster.prototype.addSplitMazeGame = function() {
-    this.addGame(new SplitMazeGame(keyboardDriver, display1, display2, display3, gridLength, squareLength));
+    this.addGame(new SplitMazeGame(this.keyboardDriver, this.display1, this.display2, this.display3, this.gridLength, this.squareLength));
     return this;
   }
 
   MazeGameMaster.prototype.addLightningMazeGame = function() {
-    this.addGame(new LightningMazeGame(keyboardDriver, reverseLightningDisplay, display3, gridLength, squareLength));
+    this.addGame(new LightningMazeGame(this.keyboardDriver, this.reverseLightningDisplay, this.display3, this.gridLength, this.squareLength));
     return this;
   }
 
   MazeGameMaster.prototype.addLightningMazeGame = function() {
-    this.addGame(new LightningMazeGame(keyboardDriver, lightningDisplay, display3, gridLength, squareLength));
+    this.addGame(new LightningMazeGame(this.keyboardDriver, this.lightningDisplay, this.display3, this.gridLength, this.squareLength));
     return this;
   }
 
   MazeGameMaster.prototype.addChaseMazeGame = function() {
-    this.addGame(new ChaseMazeGame(keyboardDriver, display1, display3, gridLength, squareLength));
+    this.addGame(new ChaseMazeGame(this.keyboardDriver, this.display1, this.display3, this.gridLength, this.squareLength));
     return this;
   }
 

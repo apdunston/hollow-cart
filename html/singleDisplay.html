@@ -1,0 +1,27 @@
+<html>
+<head>
+  <script src="../bundle.js"></script>
+</head>
+<body style="font-family: 'Courier New', Courier, monospace; background-color: #333333; color: white; height: 100%; overflow: hidden;">
+<p>uncomment global $ in index.js or this won't work.</p>
+<div class="controls">
+  <button class="start-game">Start Game</button>
+</div>
+<div id="play-area" class="play-area" style="display: none">
+  <div style="float: left">
+    <div>
+      <canvas id="canvas1"></canvas>
+    </div>
+    <div style="text-align: center">Maze</div>
+  </div>
+<div style="clear: both;"></div>
+
+<script>
+  var maze = null;
+  var hollowCart = new HollowCart();
+  $('.start-game').click(function() {
+    maze = hollowCart.startSingleDisplay(maze, null, 1, true);
+  });
+</script>
+</body>
+</html>

@@ -12,7 +12,7 @@ module.exports = function() {
   };
 
   // Constructor calls super
-  var TypedText = function TypedText(x, y, text, color) {
+  var TypedText = function TypedText(x, y, text, color, size) {
     DrawableObject.call(this);
     this.x = x;
     this.y = y;
@@ -22,6 +22,10 @@ module.exports = function() {
     this.typingState = TypedTextState.INVISIBLE;
     this.typingFrame = 0;
     this.framesPerLetter = 5;
+    this.size = size;
+    if (!this.size) {
+      DisplayConstants.TEXT_SIZE;
+    }
   };
 
   // Explicit Inheritance
@@ -45,7 +49,7 @@ module.exports = function() {
 
     if (this.text !== "") {
       DrawableObject.prototype.draw.call(this);
-      renderer.drawText(this.x, this.y, this.text, this.color, DisplayConstants.TEXT_SIZE, Font.COURIER_NEW, this.alpha);
+      renderer.drawText(this.x, this.y, this.text, this.color, this.size, Font.COURIER_NEW, this.alpha);
     }
   };
 
@@ -63,9 +67,13 @@ module.exports = function() {
     this.text += this.fullText.substr(this.text.length, 1);
     if (this.text.length === this.fullText.length) {
       this.typingState = TypedTextState.TYPED;
-      this.fn && this.fn();
+      this.callback();
     }
   };
+
+  TypedText.prototype.setCallback = function (callback) {
+    this.callback = callback;
+  }
 
   return TypedText;
 }();

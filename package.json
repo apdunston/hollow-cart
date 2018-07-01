@@ -18,6 +18,7 @@
   "dependencies": {
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
+    "jquery-visible": "^1.2.0",
     "npm": "^6.1.0",
     "tone": "^0.12.80"
   },

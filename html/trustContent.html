@@ -1,0 +1,39 @@
+<html>
+
+<!--
+    Trust Content is a multiplayer (best with 2) maze game. There are a series of scenes.
+    The collection of scenes--taken together--are an act. Once players play through an  
+    act, the second act begins. It is the same set of scenes, but goo starts coming
+    out to get the players. Each successive act, the goo gets faster. Trust Content 
+    tracks the total number of scenes the players complete. That's their score. Players
+    are welcome to assign meaning to the score as they please. Just like everything else
+    in life.
+-->
+
+<head>
+  <script src="../bundle.js"></script>
+</head>
+<body style="font-family: 'Courier New', Courier, monospace; background-color: #000000; color: white; height: 100%; overflow: hidden;">
+<p>uncomment global $ in index.js or this won't work.</p>
+<div class="controls">
+  <button class="start-game" style="background-color: white">Start Game</button>
+</div>
+<br>
+<div>
+    <div class="play-area hidden" style="display: none">
+      <div style="float: left">
+        <div>
+          <canvas id="canvas1"></canvas>
+        </div>
+      </div>
+  </div>
+</div>
+<script>
+  var maze = null;
+  var hollowCart = new HollowCart();
+  $('.start-game').click(function() {
+    maze = hollowCart.startTrustContent(maze, null, 1, true);
+  });
+</script>
+</body>
+</html>

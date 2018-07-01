@@ -9,6 +9,7 @@ module.exports = function() {
     this.isDoneValue = false;
     this.state = DrawableObjectState.STATIC;
     this.fadeDelta = 0.02;
+    this.callback = () => {};
   };
 
   DrawableObject.prototype.constructor = DrawableObject;
@@ -30,7 +31,7 @@ module.exports = function() {
   };
 
   DrawableObject.prototype.fadeOut = function () {
-    this.state = DrawableObjectState.FADING_IN;
+    this.state = DrawableObjectState.FADING_OUT;
   };
 
   DrawableObject.prototype.draw = function () {
@@ -54,9 +55,9 @@ module.exports = function() {
   };
 
   DrawableObject.prototype.fadeOutStep = function () {
-    if (this.alpha <= Alpha.INVISIBLE) {
-      this.state = DrawableObjectState.STATIC;
+    if (this.alpha <= this.fadeDelta) {
       this.alpha = Alpha.INVISIBLE;
+      this.state = DrawableObjectState.STATIC;
       return;
     }
 

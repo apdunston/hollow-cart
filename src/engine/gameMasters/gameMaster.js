@@ -15,11 +15,13 @@ module.exports = function() {
   GameMaster.prototype.addGame = function (game) {
     this.games.push(game);
     game.addGameEndListener(this);
-    console.log("added game. Games length: " + this.games.length)
     return this;
   };
 
   GameMaster.prototype.start = function (data) {
+    if (this.games.length == 0) {
+      throw "Start called on an empty GameMaster.";
+    }
     this.stopCurrentGame();
     this.currentGameIndex = 0;
     this.startCurrentGame(data);

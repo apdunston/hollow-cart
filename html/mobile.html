@@ -1,0 +1,46 @@
+<html>
+<head>
+  <script src="../bundle.js"></script>
+</head>
+<body style="font-family: 'Courier New', Courier, monospace; background-color: #333333; color: white; height: 100%; overflow: hidden;">
+<p>uncomment global $ in index.js or this won't work.</p>
+<div class="controls">
+  <button class="start-game">Start Game</button>
+</div>
+<div>
+    <div class="controls">
+      <div>
+        <button class="start-button" style="background-color: white">Start New Game</button>
+      </div>
+      <div>
+        <input type="text" name="game-name">
+        <button class="join-button" style="background-color: white">Join Game</button>
+      </div>
+    </div>
+    <br>
+    <div class="play-area hidden" style="display: none">
+      <div style="float: left">
+        <div>
+          <canvas id="canvas1"></canvas>
+        </div>
+        <div style="text-align: center">Maze</div>
+      </div>
+      <div style="float: left; width 20px">&nbsp;</div>
+      <div style="float: left">
+        <div>
+          <canvas id="canvas2"></canvas>
+        </div>
+        <div style="text-align: center">Effects</div>
+      </div>
+    <div style="clear: both;"></div>
+  </div>
+
+<script>
+  var maze = null;
+  var hollowCart = new HollowCart();
+  $('.start-game').click(function() {
+    maze = hollowCart.startMultiplayer(maze, null, 1, true);
+  });
+</script>
+</body>
+</html>
