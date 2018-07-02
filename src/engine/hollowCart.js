@@ -125,7 +125,6 @@ module.exports = function() {
 
   HollowCart.prototype.adjustCanvas = function() {
     var canvas = $('canvas');
-    console.log(canvas);
 
     var canvasLength = window.innerWidth;
     if (window.innerHeight < canvasLength) {
@@ -148,6 +147,7 @@ module.exports = function() {
   }
 
   HollowCart.prototype.startTrustContent = function(maze, networkDriver, playerNumber) {
+    var self = this;
     var gridLength = 12;
     $('.play-area').show();
 
@@ -170,6 +170,8 @@ module.exports = function() {
       .setGridLength(gridLength)
       .setSquareLength(Math.floor(canvasLength / gridLength))
       .start(maze);
+
+    $('.next').click(function() { self.gameMaster.next(); })
   }
 
 

@@ -13,6 +13,7 @@ module.exports = function() {
     this.y = y;
     this.squareLength = squareLength;
 
+    this.duration = duration;
     this.maxFrameCount = duration !== undefined ? duration : 15;
     this.frameCount = 0;
     this.framesPerColorChange = 5;
@@ -31,19 +32,23 @@ module.exports = function() {
   };
 
   Spark.prototype.draw = function (renderer) {
-    var xPlus, newColor;
-    // console.log("MaxFrameCount: " + this.maxFrameCount + " FrameCount: " + this.frameCount);
-
     if (this.frameCount <= this.maxFrameCount) {
       this.frameCount += 1;
       this.drawable.draw(renderer);
       
-      // Shrink to 90%
-      this.drawable.setLength(Math.ceil(this.squareLength * Math.pow(0.9, this.frameCount)));
-    //   xPlus = this.isHalfDone() ? -1 : 1;
-    //   this.drawable.addY(xPlus);
-    //   newColor = this.colorForFramecount(this.frameCount);
-    //   this.drawable.setColor(newColor);
+      // Shrink to 99.5%
+      var percentageToShrink = 1 - (1 / this.duration);
+      var newLength = Math.ceil(this.squareLength * Math.pow(percentageToShrink, this.frameCount));
+
+      // Shift so that it shrinks from the middle
+      var halfDifference = Math.floor((this.drawable.getLength() - newLength) / 2);
+      this.squareLength = newLength;
+      this.drawable.setLength(newLength);
+      this.drawable.addX(halfDifference);
+      this.drawable.addY(halfDifference);
+      this.x += halfDifference;
+      this.y += halfDifference;
+
     } else {
         this.display.removeObject(this);
     }

@@ -52,5 +52,9 @@ module.exports = function() {
     this.length = value;
   }
 
+  Square.prototype.getLength = function() {
+    return this.length;
+  }
+
   return Square;
 }();

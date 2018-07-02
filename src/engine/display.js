@@ -99,7 +99,7 @@ module.exports = function() {
   Display.prototype.removeObject = function(object) {
     var index = this.objects.indexOf(object);
     if (index > -1) {
-      array.splice(index, 1);
+      this.objects.splice(index, 1);
     }
   }
 

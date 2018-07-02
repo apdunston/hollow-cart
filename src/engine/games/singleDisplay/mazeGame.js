@@ -12,8 +12,6 @@ var GridTranslator = require('../../gridTranslator.js');
 var Maze = require('../../gameObjects/maze.js');
 var Player = require('../../gameObjects/player.js');
 var Circle = require('../../drawableObjects/circle.js');
-var Firework = require('../../effects/firework.js');
-var Sparkle = require('../../effects/sparkle.js');
 var Spark = require('../../effects/spark.js');
 
 
@@ -42,7 +40,7 @@ module.exports = function () {
     var y = position[1] + yMultiplier * this.squareLength;
     var numSparks = 5;
     var spread = Math.ceil(this.squareLength * 0.75);
-    var framesDuration = 40;
+    var framesDuration = 80;
 
     var oneSpark = function() {
       var sparkX = x - Math.floor(Math.random() * spread);
@@ -51,7 +49,6 @@ module.exports = function () {
       var distanceInSquares = distance/self.squareLength;
       var length = sparkLength * distanceInSquares;
       
-      console.log(distance / self.squareLength);
       new Spark(self.display, sparkX, sparkY, length, framesDuration, Gamespace.randomColor())
     }
 
@@ -158,7 +155,7 @@ module.exports = function () {
     return function() {};
   }
 
-  var continueMovement = function(self, move, success) {
+  SingleDisplayMazeGame.prototype.continueMovement = function(self, move, success) {
     var validMoves = self.validMoves(self.player.getX(), self.player.getY());
 
     if (success && validMoves.length === 2) {
@@ -175,12 +172,12 @@ module.exports = function () {
   SingleDisplayMazeGame.prototype.performMove = function(move) {
     var self = this;
     var success = move();
-    self.drawLoop();
+
     if (self.winCondition()) {
       self.win();
     }
 
-    continueMovement(self, move, success);
+    this.continueMovement(self, move, success);
   };
 
   SingleDisplayMazeGame.prototype.keyDown = function (evt) {
@@ -195,6 +192,7 @@ module.exports = function () {
   SingleDisplayMazeGame.prototype.win = function () {
     var self = this;
     this.won = true;
+    this.networkDriver.sendWin(this.playerNumber);
     this.display.flash("blue", 500, function () {
       self.gameEnd({ won: true });
     });    

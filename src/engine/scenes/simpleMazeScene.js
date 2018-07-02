@@ -10,7 +10,6 @@ module.exports = function() {
             super();
             this.display = display;
             this.squareLength = squareLength;
-            console.log(squareLength);
             this.game = new MazeGame(keyboardDriver, display, gridLength, squareLength);
         }
 
