@@ -20,6 +20,7 @@ var Game = function Game() {
   this.displays = [];
   this.keyboardDriver = null;
   this.gameEndListeners = [];
+  this.running = false;
 };
 
 Game.prototype.start = function() {
@@ -28,15 +29,21 @@ Game.prototype.start = function() {
   }
 
   this.keyboardDriver.addKeyDownListener(this);
+  this.running = true;
 };
 
 Game.prototype.stop = function() {
+  if (!this.running) {
+    return;
+  }
+
   for (var i = 0; i < this.displays.length; i++) {
     this.displays[i].clear();
     this.displays[i].stop();
   }
 
   this.keyboardDriver.removeKeyDownListener(this);
+  this.running = false;
 };
 
 Game.prototype.gameLoop = function() {

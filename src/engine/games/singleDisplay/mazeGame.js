@@ -126,6 +126,11 @@ module.exports = function() {
 
   SingleDisplayMazeGame.prototype.getMoveForEvent = function(evt) {
     var self = this;
+
+    if (!self.running) {
+      return function() {};
+    }
+
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
         return function() {
@@ -185,7 +190,7 @@ module.exports = function() {
 
   SingleDisplayMazeGame.prototype.keyDown = function (evt) {
     var move = this.getMoveForEvent(evt);
-    var success = this.performMove(move);
+    this.performMove(move);
   };
 
   SingleDisplayMazeGame.prototype.winCondition = function() {
@@ -194,11 +199,19 @@ module.exports = function() {
 
   SingleDisplayMazeGame.prototype.win = function() {
     var self = this;
+
+    if (self.timeout != null) {
+      clearTimeout(self.timeout)
+    }
+
+    this.stop();
     this.won = true;
     this.networkDriver.sendWin(this.playerNumber);
+    
     this.display.flash("blue", 500, function() {
       self.gameEnd({ won: true });
-    });    
+    });
+
   };
 
   SingleDisplayMazeGame.prototype.successfulMoveEvent = function() {
