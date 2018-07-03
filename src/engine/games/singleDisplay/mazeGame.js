@@ -20,8 +20,6 @@ module.exports = function() {
       squareLength) {
     var self = this;
 
-    console.log("SingleDisplayMazeGame constructor");
-
     Game.call(self);
     this.gridLength = gridLength;
     this.squareLength = squareLength;
@@ -84,7 +82,6 @@ module.exports = function() {
   SingleDisplayMazeGame.prototype.start = function() {
     var self = this;
     Game.prototype.start.call(self);
-    console.log("SingleDisplayMazeGame start");
     this.reset();
   };
 
@@ -196,8 +193,6 @@ module.exports = function() {
   };
 
   SingleDisplayMazeGame.prototype.win = function() {
-    console.log("SingleDisplayMazeGame win");
-    console.trace();
     var self = this;
     this.won = true;
     this.networkDriver.sendWin(this.playerNumber);

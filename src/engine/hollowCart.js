@@ -20,7 +20,7 @@ module.exports = function() {
     this.gameMaster = null;
     self.pauseSwipe = false;
 
-    var myElement = $('body')[0];
+    var myElement = $(window)[0];
     var hammer = new Hammer(myElement);
     hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 

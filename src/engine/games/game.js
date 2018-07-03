@@ -20,7 +20,6 @@ var Game = function Game() {
   this.displays = [];
   this.keyboardDriver = null;
   this.gameEndListeners = [];
-  console.log("Game constructor");
 };
 
 Game.prototype.start = function() {
@@ -32,7 +31,6 @@ Game.prototype.start = function() {
 };
 
 Game.prototype.stop = function() {
-  console.log("game stop");
   for (var i = 0; i < this.displays.length; i++) {
     this.displays[i].clear();
     this.displays[i].stop();

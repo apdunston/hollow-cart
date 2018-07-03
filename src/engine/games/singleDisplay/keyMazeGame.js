@@ -16,9 +16,6 @@ var Circle = require('../../drawableObjects/circle.js');
 module.exports = function() {
   var KeyMazeGame = function KeyMazeGame(keyboardDriver, display, gridLength, 
       squareLength) {
-    //!!ADRIAN
-    console.log("KeyMazeGame constructor");
-
     var self = this;
     SingleDisplayMazeGame.call(self, keyboardDriver, display, gridLength, squareLength);
 
@@ -26,6 +23,11 @@ module.exports = function() {
 
   KeyMazeGame.prototype = Object.create(SingleDisplayMazeGame.prototype);
   KeyMazeGame.prototype.constructor = KeyMazeGame;
+
+  KeyMazeGame.prototype.start = function() {
+    console.log("KeyMazeGame start");
+    SingleDisplayMazeGame.prototype.start.call(this);
+  }
 
   KeyMazeGame.prototype.clearDisplays = function() {
     this.display.clear();
@@ -36,6 +38,22 @@ module.exports = function() {
     this.drawLoop();
   };
 
+  var upTo = function(num) {
+    return Math.floor(Math.random() * (num + 1));
+  };
+
+  var placeKey = function(self) {
+    var x = upTo(self.gridLength);
+    var y = upTo(self.gridLength);
+
+    // Don't put key on door.
+    if (x == self.gridLength && y == self.gridLength) {
+      return placeKey(self);
+    }
+
+    self.key = new Key(x, y, self.squareLength, self.gridTranslator);
+  }
+
   KeyMazeGame.prototype.reset = function() {
     this.won = false;
     this.map = MazeData.generate(this.gridLength, this.gridLength);
@@ -44,7 +62,7 @@ module.exports = function() {
     this.player = new Player(this.gridLength, this.squareLength, this);
     var goalSquareLocation = this.gridLength * this.squareLength - this.squareLength / 2;
     this.goalObject = new Circle(goalSquareLocation, goalSquareLocation, this.squareLength / 4, "green");
-    this.key = new Key(5, 5, this.squareLength, this.gridTranslator);
+    placeKey(this)
     this.clearDisplays();
   };
 
@@ -61,7 +79,11 @@ module.exports = function() {
 
   KeyMazeGame.prototype.performMove = function(move) {
     var self = this;
-    var success = move();
+    SingleDisplayMazeGame.prototype.performMove.call(self, move);
+
+    if (self.winCondition()) {
+      return;
+    }
 
     if (playerAtKey(this.player, this.key)) {
       this.player.addToInventory(this.key);
@@ -70,12 +92,6 @@ module.exports = function() {
     if (this.player.has(this.key)) {
       moveKeyWithPlayer(this.key, this.player);
     }
-
-    if (self.winCondition()) {
-      self.win();
-    }
-
-    this.continueMovement(self, move, success);
   };
 
   KeyMazeGame.prototype.winCondition = function() {

@@ -19,20 +19,12 @@ module.exports = function() {
     this.keyboardDriver = keyboardDriver;
     this.setNetworkDriver(NullNetworkDriver);
 
-    var displaySpeed = 100;//!!ADRIAN 100
+    var displaySpeed = 100;
     this.display = new Display(new DisplayDriver(canvas), displaySpeed);
     this.display.setColor("black");
     this.displays = [this.display];
     this.addGame(new SimpleMazeScene(this.keyboardDriver, this.display, this.gridLength, this.squareLength));
     this.addGame(new KeyMazeScene(this.keyboardDriver, this.display, this.gridLength, this.squareLength));
-
-    //!!ADRIAN
-    $('.win').click(function() {
-        var game = self.getCurrentGame();
-        console.log("sending win to : ", game); 
-        game.win();
-    });
-
   };
 
   TrustContentGameMaster.prototype = Object.create(MazeGameMaster.prototype);
