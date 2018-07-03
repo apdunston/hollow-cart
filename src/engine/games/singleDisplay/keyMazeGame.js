@@ -25,7 +25,6 @@ module.exports = function() {
   KeyMazeGame.prototype.constructor = KeyMazeGame;
 
   KeyMazeGame.prototype.start = function() {
-    console.log("KeyMazeGame start");
     SingleDisplayMazeGame.prototype.start.call(this);
   }
 
@@ -39,7 +38,7 @@ module.exports = function() {
   };
 
   var upTo = function(num) {
-    return Math.floor(Math.random() * (num + 1));
+    return Math.floor(Math.random() * (num));
   };
 
   var placeKey = function(self) {
