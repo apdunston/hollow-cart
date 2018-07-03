@@ -10,7 +10,7 @@ var GridTranslator = require('../gridTranslator.js');
 var Square = require('../drawableObjects/square.js');
 var Gamespace = require('../gamespace.js');
 
-module.exports = function () {
+module.exports = function() {
 
   // Private
   var _wrapPosition = function _wrapPosition(self) {
@@ -44,7 +44,7 @@ module.exports = function () {
     this.positionDrawableObject();
   };
 
-  Entity.prototype.positionDrawableObject = function () {
+  Entity.prototype.positionDrawableObject = function() {
     var xPixels = this.gridTranslator.xInPixels(this.x) + this.bump;
     var yPixels = this.gridTranslator.yInPixels(this.y) + this.bump;
     this.square.setPosition(xPixels, yPixels);
@@ -86,31 +86,31 @@ module.exports = function () {
     return this.x === entity.getX() && this.y === entity.getY();
   };
 
-  Entity.prototype.getX = function () {
+  Entity.prototype.getX = function() {
     return this.x;
   };
-  Entity.prototype.getY = function () {
+  Entity.prototype.getY = function() {
     return this.y;
   };
-  Entity.prototype.up = function () {
+  Entity.prototype.up = function() {
     return this.move(Gamespace.UP);
   };
-  Entity.prototype.down = function () {
+  Entity.prototype.down = function() {
     return this.move(Gamespace.DOWN);
   };
-  Entity.prototype.left = function () {
+  Entity.prototype.left = function() {
     return this.move(Gamespace.LEFT);
   };
-  Entity.prototype.right = function () {
+  Entity.prototype.right = function() {
     return this.move(Gamespace.RIGHT);
   };
-  Entity.prototype.isDone = function () {
+  Entity.prototype.isDone = function() {
     return false;
   };
   Entity.prototype.draw = function (renderer) {
     this.square.draw(renderer);
   };
-  Entity.prototype.getDisplayObjects = function () {
+  Entity.prototype.getDisplayObjects = function() {
     return [this.square];
   };
   return Entity;

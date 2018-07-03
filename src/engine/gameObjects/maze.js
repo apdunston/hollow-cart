@@ -24,11 +24,11 @@ module.exports = function() {
   Maze.prototype = Object.create(DrawableObject.prototype);
   Maze.prototype.constructor = Maze;
 
-  Maze.prototype.isDone = function () {
+  Maze.prototype.isDone = function() {
     return false;
   };
 
-  Maze.prototype.getDisplayObjects = function () {
+  Maze.prototype.getDisplayObjects = function() {
     return [this];
   };
 

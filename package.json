@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "budo src/index.js:bundle.js --live",
-    "build": "browserify src/index.js > bundle.js",
+    "build": "browserify src/index.js  -t [ babelify --presets [ \"babel-preset-env\" ] ] > bundle.js",
     "package": "browserify src/index.js | uglifyjs -cm > bundle.js"
   },
   "keywords": [
@@ -23,6 +23,9 @@
     "tone": "^0.12.80"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
     "browserify": "^16.2.2",
     "budo": "^11.2.2",
     "uglify-js": "^3.4.0"

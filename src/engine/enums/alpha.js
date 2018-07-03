@@ -9,7 +9,7 @@ module.exports = {
   TRANSLUCENT: 0.4,
   INVISIBLE: 0.0,
   
-  values: function () {
+  values: function() {
     return Object.keys(Alpha).map(function (key) {
       return Alpha[key];
     })

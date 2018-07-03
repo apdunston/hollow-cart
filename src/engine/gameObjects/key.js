@@ -47,11 +47,11 @@ module.exports = function() {
       return this.y;
   }
 
-  Key.prototype.isDone = function () {
+  Key.prototype.isDone = function() {
     return false;
   };
 
-  Key.prototype.getDisplayObjects = function () {
+  Key.prototype.getDisplayObjects = function() {
     return [this];
   };
 

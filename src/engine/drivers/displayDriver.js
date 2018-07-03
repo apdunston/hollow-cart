@@ -2,7 +2,7 @@
 
 var Font = require('../drawableObjects/font.js');
 
-module.exports = function () {
+module.exports = function() {
   var _alphaWrap = function _alphaWrap(self, alpha, fn) {
     if (alpha !== undefined) {
       self.context.globalAlpha = alpha;
@@ -20,7 +20,7 @@ module.exports = function () {
 
   DisplayDriver.prototype.constructor = DisplayDriver;
 
-  DisplayDriver.prototype.getWidth = function () {
+  DisplayDriver.prototype.getWidth = function() {
     return this.canvas.width;
   };
 

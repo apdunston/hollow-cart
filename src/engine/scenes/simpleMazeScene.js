@@ -27,7 +27,7 @@ module.exports = function() {
                 text.fadeOut();
                 self.showText2(margin);
             }
-            var callback = () => setTimeout(next, 1000);
+            var callback = function() { setTimeout(next, 1000); };
             text.setCallback(callback);
             text.type();
         }
@@ -39,7 +39,7 @@ module.exports = function() {
             var next = function() {
                 text.fadeOut();                
             }
-            var callback = () => setTimeout(next, 1000);
+            var callback = function() { setTimeout(next, 1000); };
             text.setCallback(callback);
             text.type();
         }

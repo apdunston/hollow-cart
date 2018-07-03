@@ -25,11 +25,11 @@ module.exports = function() {
     return Gamespace.rainbow[Math.floor(count / this.framesPerColorChange) + this.startColor % Gamespace.rainbow.length];
   };
 
-  Sparkle.prototype.isHalfDone = function () {
+  Sparkle.prototype.isHalfDone = function() {
     return this.frameCount > this.maxFrameCount / 2;
   };
 
-  Sparkle.prototype.isDone = function () {
+  Sparkle.prototype.isDone = function() {
     return this.frameCount > this.maxFrameCount;
   };
 
@@ -46,7 +46,7 @@ module.exports = function() {
     }
   };
 
-  Sparkle.prototype.getFrameCount = function () {
+  Sparkle.prototype.getFrameCount = function() {
     return this.frameCount;
   };
 

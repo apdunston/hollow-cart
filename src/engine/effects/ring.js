@@ -70,7 +70,7 @@ module.exports = function() {
     }
   };
 
-  Ring.prototype.isDone = function () {
+  Ring.prototype.isDone = function() {
     return this.isDoneValue;
   };
 

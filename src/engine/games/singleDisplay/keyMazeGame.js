@@ -13,16 +13,21 @@ var Key = require('../../gameObjects/key.js');
 var Circle = require('../../drawableObjects/circle.js');
 
 
-module.exports = function () {
+module.exports = function() {
   var KeyMazeGame = function KeyMazeGame(keyboardDriver, display, gridLength, 
       squareLength) {
+    //!!ADRIAN
+    console.log("KeyMazeGame constructor");
+
     var self = this;
     SingleDisplayMazeGame.call(self, keyboardDriver, display, gridLength, squareLength);
+
   };
 
   KeyMazeGame.prototype = Object.create(SingleDisplayMazeGame.prototype);
+  KeyMazeGame.prototype.constructor = KeyMazeGame;
 
-  KeyMazeGame.prototype.clearDisplays = function () {
+  KeyMazeGame.prototype.clearDisplays = function() {
     this.display.clear();
     this.display.addObject(this.maze);
     this.display.addObject(this.player);
@@ -31,7 +36,7 @@ module.exports = function () {
     this.drawLoop();
   };
 
-  KeyMazeGame.prototype.reset = function () {
+  KeyMazeGame.prototype.reset = function() {
     this.won = false;
     this.map = MazeData.generate(this.gridLength, this.gridLength);
     this.drawMap = MazeData.translate(this.map);
@@ -73,7 +78,7 @@ module.exports = function () {
     this.continueMovement(self, move, success);
   };
 
-  KeyMazeGame.prototype.winCondition = function () {
+  KeyMazeGame.prototype.winCondition = function() {
     return this.player.has(this.key) && 
       (this.player.x === this.gridLength - 1) && 
       (this.player.y === this.gridLength - 1);

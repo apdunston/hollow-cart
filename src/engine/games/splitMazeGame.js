@@ -22,7 +22,7 @@ module.exports = function() {
   SplitMazeGame.prototype = Object.create(MazeGame.prototype);
   SplitMazeGame.prototype.constructor = SplitMazeGame;
 
-  SplitMazeGame.prototype.clearDisplays = function () {
+  SplitMazeGame.prototype.clearDisplays = function() {
     this.horizontalDisplay = new HorizontalDisplay(this.drawMap, this.squareLength);
     this.verticalDisplay = new VerticalDisplay(this.drawMap, this.squareLength);
 
@@ -37,19 +37,19 @@ module.exports = function() {
     this.drawLoop();
   };
 
-  SplitMazeGame.prototype.drawLoop = function () {
+  SplitMazeGame.prototype.drawLoop = function() {
     this.mazeXDisplay.render();
     this.mazeYDisplay.render();
   };
 
-  SplitMazeGame.prototype.win = function () {
+  SplitMazeGame.prototype.win = function() {
     var self = this;
     var secondFlashDuration = 500;
     var secondFlashDelay = 75;
     var firstFlashDuration = secondFlashDelay + secondFlashDuration;
-    this.mazeXDisplay.flash("blue", firstFlashDuration, function () {});
-    setTimeout(function () {
-      self.mazeYDisplay.flash("blue", secondFlashDuration, function () {
+    this.mazeXDisplay.flash("blue", firstFlashDuration, function() {});
+    setTimeout(function() {
+      self.mazeYDisplay.flash("blue", secondFlashDuration, function() {
         self.gameEnd({ won: true });
       });
     }, secondFlashDelay);

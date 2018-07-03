@@ -44,6 +44,10 @@ module.exports = function() {
         addGameEndListener(listener) {
             this.game.addGameEndListener(listener);
         }
+
+        win() {
+            this.game.win();
+        }
     }
 
     return Scene;

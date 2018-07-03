@@ -27,7 +27,7 @@ module.exports = function() {
     this.startCurrentGame(data);
   };
 
-  GameMaster.prototype.stop = function () {
+  GameMaster.prototype.stop = function() {
     this.stopCurrentGame();
     this.currentGameIndex = null;
   };
@@ -54,7 +54,7 @@ module.exports = function() {
     this.startCurrentGame(data);
   };
 
-  GameMaster.prototype.stopCurrentGame = function () {
+  GameMaster.prototype.stopCurrentGame = function() {
     if (this.currentGameIndex !== null) {
       this.games[this.currentGameIndex].stop();
     }
@@ -66,11 +66,11 @@ module.exports = function() {
     }
   };
 
-  GameMaster.prototype.onLastGame = function () {
+  GameMaster.prototype.onLastGame = function() {
     return this.currentGameIndex == this.games.length - 1;
   };
 
-  GameMaster.prototype.onFirstGame = function () {
+  GameMaster.prototype.onFirstGame = function() {
     return this.currentGameIndex == 0;
   };
 

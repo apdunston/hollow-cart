@@ -15,10 +15,13 @@ var Circle = require('../../drawableObjects/circle.js');
 var Spark = require('../../effects/spark.js');
 
 
-module.exports = function () {
+module.exports = function() {
   var SingleDisplayMazeGame = function SingleDisplayMazeGame(keyboardDriver, display, gridLength, 
       squareLength) {
     var self = this;
+
+    console.log("SingleDisplayMazeGame constructor");
+
     Game.call(self);
     this.gridLength = gridLength;
     this.squareLength = squareLength;
@@ -78,17 +81,18 @@ module.exports = function () {
     return this.maze;
   }
 
-  SingleDisplayMazeGame.prototype.start = function () {
+  SingleDisplayMazeGame.prototype.start = function() {
     var self = this;
     Game.prototype.start.call(self);
+    console.log("SingleDisplayMazeGame start");
     this.reset();
   };
 
-  SingleDisplayMazeGame.prototype.drawLoop = function () {
+  SingleDisplayMazeGame.prototype.drawLoop = function() {
     this.display.render();
   };
 
-  SingleDisplayMazeGame.prototype.clearDisplays = function () {
+  SingleDisplayMazeGame.prototype.clearDisplays = function() {
     this.display.clear();
     this.display.addObject(this.maze);
     this.display.addObject(this.player);
@@ -96,7 +100,7 @@ module.exports = function () {
     this.drawLoop();
   };
 
-  SingleDisplayMazeGame.prototype.reset = function () {
+  SingleDisplayMazeGame.prototype.reset = function() {
     this.won = false;
     this.map = MazeData.generate(this.gridLength, this.gridLength);
     this.drawMap = MazeData.translate(this.map);
@@ -119,7 +123,7 @@ module.exports = function () {
     return this.maze.validMove(x, y, direction);
   };
 
-  SingleDisplayMazeGame.prototype.getPlayer = function () {
+  SingleDisplayMazeGame.prototype.getPlayer = function() {
     return this.player;
   };
 
@@ -155,7 +159,8 @@ module.exports = function () {
     return function() {};
   }
 
-  SingleDisplayMazeGame.prototype.continueMovement = function(self, move, success) {
+  SingleDisplayMazeGame.prototype.continueMovement = function(move, success) {
+    var self = this;
     var validMoves = self.validMoves(self.player.getX(), self.player.getY());
 
     if (success && validMoves.length === 2) {
@@ -175,9 +180,10 @@ module.exports = function () {
 
     if (self.winCondition()) {
       self.win();
+      return;
     }
 
-    this.continueMovement(self, move, success);
+    this.continueMovement(move, success);
   };
 
   SingleDisplayMazeGame.prototype.keyDown = function (evt) {
@@ -185,20 +191,22 @@ module.exports = function () {
     var success = this.performMove(move);
   };
 
-  SingleDisplayMazeGame.prototype.winCondition = function () {
+  SingleDisplayMazeGame.prototype.winCondition = function() {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1;
   };
 
-  SingleDisplayMazeGame.prototype.win = function () {
+  SingleDisplayMazeGame.prototype.win = function() {
+    console.log("SingleDisplayMazeGame win");
+    console.trace();
     var self = this;
     this.won = true;
     this.networkDriver.sendWin(this.playerNumber);
-    this.display.flash("blue", 500, function () {
+    this.display.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });    
   };
 
-  SingleDisplayMazeGame.prototype.successfulMoveEvent = function () {
+  SingleDisplayMazeGame.prototype.successfulMoveEvent = function() {
     var self = this;
     if (this.display === null) {
       return;

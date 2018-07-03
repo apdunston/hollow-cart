@@ -38,7 +38,7 @@ module.exports = function() {
   HallGame.prototype = Object.create(Game.prototype);
   HallGame.prototype.constructor = HallGame;
 
-  HallGame.prototype.start = function () {
+  HallGame.prototype.start = function() {
     Game.prototype.start.call(this);
     this.state = HallGameStates.BEGINNING;
     var margin = DisplayConstants.TEXT_MARGIN;
@@ -48,7 +48,7 @@ module.exports = function() {
     this.statusDisplay.addObject(this.blinkingCursor);
   };
 
-  HallGame.prototype.proceedToMiddle = function () {
+  HallGame.prototype.proceedToMiddle = function() {
     var self = this;
     this.state = HallGameStates.MIDDLE;
     this.blinkingCursor.setIsDone(true);
@@ -56,12 +56,12 @@ module.exports = function() {
     this.player.setPosition(0, 0);
     this.mazeDisplay.clear();
     this.mazeDisplay.addObject(this.player);
-    setTimeout(function () {
+    setTimeout(function() {
       self.proceedToEnd();
     }, 500);
   };
 
-  HallGame.prototype.proceedToEnd = function () {
+  HallGame.prototype.proceedToEnd = function() {
     var self = this;
     var margin = DisplayConstants.TEXT_MARGIN;
     var textSize = DisplayConstants.TEXT_SIZE;
@@ -75,12 +75,12 @@ module.exports = function() {
     this.maze.fadeIn();
 
     this.placeGoalObject();
-    setTimeout(function () {
+    setTimeout(function() {
       self.goalObject.fadeIn();
     }, 500);
   };
 
-  HallGame.prototype.placeGoalObject = function () {
+  HallGame.prototype.placeGoalObject = function() {
     var x = this.gridTranslator.xInPixels(this.hallLength) - this.squareLength / 2;
     var y = this.gridTranslator.yInPixels(1) - this.squareLength / 2;
     this.goalObject = new Circle(x, y, this.squareLength / 4, "green");
@@ -102,7 +102,7 @@ module.exports = function() {
     }
   };
 
-  HallGame.prototype.advanceState = function () {
+  HallGame.prototype.advanceState = function() {
     if (this.state === HallGameStates.BEGINNING) {
       this.proceedToMiddle();
       return;
@@ -136,14 +136,14 @@ module.exports = function() {
     }
   };
 
-  HallGame.prototype.winCondition = function () {
+  HallGame.prototype.winCondition = function() {
     return this.player.getX() === this.hallLength - 1;
   };
 
-  HallGame.prototype.win = function () {
+  HallGame.prototype.win = function() {
     var self = this;
     this.won = true;
-    this.mazeDisplay.flash("blue", 500, function () {
+    this.mazeDisplay.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });
   };

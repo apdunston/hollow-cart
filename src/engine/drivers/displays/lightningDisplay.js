@@ -27,17 +27,17 @@ module.exports = function() {
   LightningDisplay.prototype = Object.create(Display.prototype);
   LightningDisplay.prototype.constructor = LightningDisplay;
 
-  LightningDisplay.prototype.applyDelta = function () {
+  LightningDisplay.prototype.applyDelta = function() {
     this.currentAlpha -= this.delta;
   };
 
-  LightningDisplay.prototype.clear = function () {
+  LightningDisplay.prototype.clear = function() {
     this.lightningObjects = [];
     this.objects = [];
     this.addObject(this.backgroundObject);
   };
 
-  LightningDisplay.prototype.render = function () {
+  LightningDisplay.prototype.render = function() {
     Display.prototype.render.call(this);
 
     if (this.lightningObjects.length > 0 && this.flashing) {
@@ -50,7 +50,7 @@ module.exports = function() {
     this.drawLightning();
   };
 
-  LightningDisplay.prototype.advanceLightning = function () {
+  LightningDisplay.prototype.advanceLightning = function() {
     this.currentFlashFrame += 1;
 
     if (this.flashFrames.includes(this.currentFlashFrame)) {
@@ -66,16 +66,16 @@ module.exports = function() {
     this.applyDelta();
   };
 
-  LightningDisplay.prototype.grabFlashFrames = function () {
+  LightningDisplay.prototype.grabFlashFrames = function() {
     var index = Math.floor(Math.random() * this.flashProgressions.length);
     this.flashFrames = this.flashProgressions[index];
   };
 
-  LightningDisplay.prototype.lightningDoneCondition = function () {
+  LightningDisplay.prototype.lightningDoneCondition = function() {
     this.currentAlpha <= this.endingAlpha;
   };
 
-  LightningDisplay.prototype.drawLightning = function () {
+  LightningDisplay.prototype.drawLightning = function() {
     if (this.lightningDoneCondition()) {
       this.currentAlpha = this.endingAlpha;
     }
@@ -89,12 +89,12 @@ module.exports = function() {
     }
   };
 
-  LightningDisplay.prototype.resetLightning = function () {
+  LightningDisplay.prototype.resetLightning = function() {
     this.flashing = false;
     this.currentFlashFrame = 0;
   };
 
-  LightningDisplay.prototype.goLightning = function () {
+  LightningDisplay.prototype.goLightning = function() {
     var self = this;
     this.grabFlashFrames();
     this.currentAlpha = this.startingAlpha;

@@ -217,7 +217,7 @@ module.exports = function() {
   };
 
 
-  HollowCart.prototype.startNeuralActivity = function () {
+  HollowCart.prototype.startNeuralActivity = function() {
     var canv, display1, display2, display3, display4, mazeGame, 
       canvasLength, canvas1, canvas2, canvas3, canvas4, canvas5, 
       canvas6, keyboardDriver, soundDriver, gameMaster;
@@ -239,15 +239,15 @@ module.exports = function() {
     this.gameMaster = new NeuralActivityGameMaster(canvas1, canvas2, canvas3, canvas4, canvas5, canvas6, keyboardDriver, soundDriver);
   }
 
-  HollowCart.prototype.next = function () {
+  HollowCart.prototype.next = function() {
     this.gameMaster.next();
   }
 
-  HollowCart.prototype.previous = function () {
+  HollowCart.prototype.previous = function() {
     this.gameMaster.previous();
   }
 
-  HollowCart.prototype.getCurrentGame = function () {
+  HollowCart.prototype.getCurrentGame = function() {
     return this.gameMaster.getCurrentGame();
   }
 

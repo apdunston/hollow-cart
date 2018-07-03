@@ -20,9 +20,10 @@ var Game = function Game() {
   this.displays = [];
   this.keyboardDriver = null;
   this.gameEndListeners = [];
+  console.log("Game constructor");
 };
 
-Game.prototype.start = function () {
+Game.prototype.start = function() {
   for (var i = 0; i < this.displays.length; i++) {
     this.displays[i].start();
   }
@@ -30,7 +31,8 @@ Game.prototype.start = function () {
   this.keyboardDriver.addKeyDownListener(this);
 };
 
-Game.prototype.stop = function () {
+Game.prototype.stop = function() {
+  console.log("game stop");
   for (var i = 0; i < this.displays.length; i++) {
     this.displays[i].clear();
     this.displays[i].stop();
@@ -39,11 +41,11 @@ Game.prototype.stop = function () {
   this.keyboardDriver.removeKeyDownListener(this);
 };
 
-Game.prototype.gameLoop = function () {
+Game.prototype.gameLoop = function() {
   // method stuff
 };
 
-Game.prototype.keyDown = function () {
+Game.prototype.keyDown = function() {
   // method stuff
 };
 
@@ -57,7 +59,7 @@ Game.prototype.gameEnd = function (data) {
   }
 };
 
-Game.prototype.successfulMoveEvent = function () {
+Game.prototype.successfulMoveEvent = function() {
   // method stuff
 };
 

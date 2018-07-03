@@ -6,7 +6,7 @@
 
 var Entity = require('./entity.js');
 
-module.exports = function () {
+module.exports = function() {
 
   var Player = function Player(gridLength, squareLength, game, gridTranslator) {
     Entity.call(this, gridLength, squareLength, game, "white", gridTranslator);

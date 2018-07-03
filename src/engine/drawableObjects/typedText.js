@@ -53,7 +53,7 @@ module.exports = function() {
     }
   };
 
-  TypedText.prototype.advanceTypingFrame = function () {
+  TypedText.prototype.advanceTypingFrame = function() {
     if (this.typingFrame === this.framesPerLetter) {
       this.typingFrame = 0;
       this.addLetter();
@@ -63,7 +63,7 @@ module.exports = function() {
     this.typingFrame += 1;
   };
 
-  TypedText.prototype.addLetter = function () {
+  TypedText.prototype.addLetter = function() {
     this.text += this.fullText.substr(this.text.length, 1);
     if (this.text.length === this.fullText.length) {
       this.typingState = TypedTextState.TYPED;

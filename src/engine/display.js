@@ -32,7 +32,7 @@ module.exports = function() {
     time = time ? time : 200;
     var flashObject = new Square(0, 0, this.width, color);
     this.objects.push(flashObject);
-    setTimeout(function () {
+    setTimeout(function() {
       self.objects.pop();
       if (callback) {
         callback();
@@ -40,7 +40,7 @@ module.exports = function() {
     }, time);
   };
 
-  Display.prototype.render = function () {
+  Display.prototype.render = function() {
     if (this.backgroundOnly) {
       return;
     }
@@ -57,7 +57,7 @@ module.exports = function() {
     }
   };
 
-  Display.prototype.start = function () {
+  Display.prototype.start = function() {
     if (this.drawInterval !== null) {
       throw "Cannot start a running display";
     }
@@ -68,12 +68,12 @@ module.exports = function() {
 
     var milliseconds = 1000 / this.framesPerSecond;
     var self = this;
-    this.drawInterval = setInterval(function () {
+    this.drawInterval = setInterval(function() {
       self.render();
     }, milliseconds);
   };
 
-  Display.prototype.stop = function () {
+  Display.prototype.stop = function() {
     if (this.drawInterval === null) {
       throw "Cannot stop a stopped display";
     }
@@ -85,7 +85,7 @@ module.exports = function() {
     this.drawInterval = null;
   };
 
-  Display.prototype.clear = function () {
+  Display.prototype.clear = function() {
     this.objects = [];
     this.addObject(this.backgroundObject);
     this.render();
@@ -103,7 +103,7 @@ module.exports = function() {
     }
   }
 
-  Display.prototype.getLength = function () {
+  Display.prototype.getLength = function() {
     return this.width;
   };
 

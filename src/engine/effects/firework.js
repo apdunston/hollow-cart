@@ -37,7 +37,7 @@ module.exports = function() {
     this.rings = [];
   };
 
-  Firework.prototype.getDisplayObjects = function () {
+  Firework.prototype.getDisplayObjects = function() {
     return [this];
   };
 
@@ -60,7 +60,7 @@ module.exports = function() {
     }
   };
 
-  Firework.prototype.isDone = function () {
+  Firework.prototype.isDone = function() {
     // return false;
     return this.frameCount > this.maxFrameCount;
   };

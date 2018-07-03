@@ -23,7 +23,7 @@ module.exports = function() {
     this.keyDownListeners.splice(index, 1);
   };
 
-  KeyboardDriver.prototype.getKeyDownListeners = function () {
+  KeyboardDriver.prototype.getKeyDownListeners = function() {
     return this.keyDownListeners;
   };
 

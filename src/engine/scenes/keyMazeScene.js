@@ -27,22 +27,10 @@ module.exports = function() {
                 text.fadeOut();
                 // self.showText2(margin);
             }
-            var callback = () => setTimeout(next, 1000);
+            var callback = function() {setTimeout(next, 1000);};
             text.setCallback(callback);
             text.type();
         }
-
-        // showText2(margin) {
-        //     var size = Math.ceil(this.squareLength * 0.5);
-        //     var text = new TypedText(margin, 4 * margin, "Move white square to green circle", "white", size);
-        //     this.display.addObject(text);
-        //     var next = function() {
-        //         text.fadeOut();                
-        //     }
-        //     var callback = () => setTimeout(next, 1000);
-        //     text.setCallback(callback);
-        //     text.type();
-        // }
     }
     return KeyMazeScene;
 }();

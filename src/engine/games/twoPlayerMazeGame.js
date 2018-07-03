@@ -13,7 +13,7 @@ var Circle = require('../drawableObjects/circle.js');
 var Gamespace = require('../gamespace.js');
 var Firework = require('../effects/firework.js');
 
-module.exports = function () {
+module.exports = function() {
   var TwoPlayerMazeGame = function TwoPlayerMazeGame(keyboardDriver, mazeDisplay, neuralDisplay, 
       gridLength, squareLength) {
     var self = this;
@@ -35,11 +35,11 @@ module.exports = function () {
     this.reset(maze);
   };
 
-  TwoPlayerMazeGame.prototype.drawLoop = function () {
+  TwoPlayerMazeGame.prototype.drawLoop = function() {
     this.mazeDisplay.render();
   };
 
-  TwoPlayerMazeGame.prototype.clearDisplays = function () {
+  TwoPlayerMazeGame.prototype.clearDisplays = function() {
     this.mazeDisplay.clear();
     this.mazeDisplay.addObject(this.maze);
     this.mazeDisplay.addObject(this.player);
@@ -79,7 +79,7 @@ module.exports = function () {
     return this.maze.validMove(x, y, direction);
   };
 
-  TwoPlayerMazeGame.prototype.getPlayer = function () {
+  TwoPlayerMazeGame.prototype.getPlayer = function() {
     return this.player;
   };
 
@@ -111,19 +111,19 @@ module.exports = function () {
     return function() {};
   }
 
-  TwoPlayerMazeGame.prototype.winCondition = function () {
+  TwoPlayerMazeGame.prototype.winCondition = function() {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1 || this.player2.x === this.gridLength - 1 && this.player2.y === this.gridLength - 1;
   };
 
-  TwoPlayerMazeGame.prototype.win = function () {
+  TwoPlayerMazeGame.prototype.win = function() {
     var self = this;
     this.won = true;
-    this.mazeDisplay.flash("blue", 500, function () {
+    this.mazeDisplay.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });
   };
 
-  TwoPlayerMazeGame.prototype.successfulMoveEvent = function () {
+  TwoPlayerMazeGame.prototype.successfulMoveEvent = function() {
     if (this.neuralDisplay === null) {
       return;
     }

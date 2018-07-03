@@ -13,7 +13,7 @@ var Circle = require('../drawableObjects/circle.js');
 var Gamespace = require('../gamespace.js');
 var Firework = require('../effects/firework.js');
 
-module.exports = function () {
+module.exports = function() {
   var MultiplayerOnlineMazeGame = function MultiplayerOnlineMazeGame(keyboardDriver, mazeDisplay, 
       neuralDisplay, gridLength, squareLength, networkDriver, playerNumber) {
     var self = this;
@@ -48,11 +48,11 @@ module.exports = function () {
     this.reset(maze);
   };
 
-  MultiplayerOnlineMazeGame.prototype.drawLoop = function () {
+  MultiplayerOnlineMazeGame.prototype.drawLoop = function() {
     this.mazeDisplay.render();
   };
 
-  MultiplayerOnlineMazeGame.prototype.clearDisplays = function () {
+  MultiplayerOnlineMazeGame.prototype.clearDisplays = function() {
     this.mazeDisplay.clear();
     this.mazeDisplay.addObject(this.maze);
     for (var x = 0; x < this.players.length; x++) {
@@ -105,7 +105,7 @@ module.exports = function () {
     return this.maze.validMove(x, y, direction);
   };
 
-  MultiplayerOnlineMazeGame.prototype.getPlayer = function () {
+  MultiplayerOnlineMazeGame.prototype.getPlayer = function() {
     return this.player;
   };
 
@@ -113,20 +113,20 @@ module.exports = function () {
     return this.maze;
   }
 
-  MultiplayerOnlineMazeGame.prototype.winCondition = function () {
+  MultiplayerOnlineMazeGame.prototype.winCondition = function() {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1;
   };
 
-  MultiplayerOnlineMazeGame.prototype.win = function () {
+  MultiplayerOnlineMazeGame.prototype.win = function() {
     var self = this;
     this.won = true;
     this.networkDriver.sendWin(this.playerNumber);
-    this.mazeDisplay.flash("blue", 500, function () {
+    this.mazeDisplay.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });
   };
 
-  MultiplayerOnlineMazeGame.prototype.successfulMoveEvent = function () {
+  MultiplayerOnlineMazeGame.prototype.successfulMoveEvent = function() {
     this.networkDriver.send({
       x: this.player.x,
       y: this.player.y,

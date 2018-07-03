@@ -13,7 +13,7 @@ var Player = require('../gameObjects/player.js');
 var Circle = require('../drawableObjects/circle.js');
 var Firework = require('../effects/firework.js');
 
-module.exports = function () {
+module.exports = function() {
   var MazeGame = function MazeGame(keyboardDriver, mazeDisplay, neuralDisplay, gridLength, 
       squareLength) {
     var self = this;
@@ -49,17 +49,17 @@ module.exports = function () {
     return this.maze;
   }
 
-  MazeGame.prototype.start = function () {
+  MazeGame.prototype.start = function() {
     var self = this;
     Game.prototype.start.call(self);
     this.reset();
   };
 
-  MazeGame.prototype.drawLoop = function () {
+  MazeGame.prototype.drawLoop = function() {
     this.mazeDisplay.render();
   };
 
-  MazeGame.prototype.clearDisplays = function () {
+  MazeGame.prototype.clearDisplays = function() {
     this.mazeDisplay.clear();
     this.mazeDisplay.addObject(this.maze);
     this.mazeDisplay.addObject(this.player);
@@ -67,7 +67,7 @@ module.exports = function () {
     this.drawLoop();
   };
 
-  MazeGame.prototype.reset = function () {
+  MazeGame.prototype.reset = function() {
     this.won = false;
     this.map = MazeData.generate(this.gridLength, this.gridLength);
     this.drawMap = MazeData.translate(this.map);
@@ -90,7 +90,7 @@ module.exports = function () {
     return this.maze.validMove(x, y, direction);
   };
 
-  MazeGame.prototype.getPlayer = function () {
+  MazeGame.prototype.getPlayer = function() {
     return this.player;
   };
 
@@ -140,19 +140,19 @@ module.exports = function () {
     var success = this.performMove(move);
   };
 
-  MazeGame.prototype.winCondition = function () {
+  MazeGame.prototype.winCondition = function() {
     return this.player.x === this.gridLength - 1 && this.player.y === this.gridLength - 1;
   };
 
-  MazeGame.prototype.win = function () {
+  MazeGame.prototype.win = function() {
     var self = this;
     this.won = true;
-    this.mazeDisplay.flash("blue", 500, function () {
+    this.mazeDisplay.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });    
   };
 
-  MazeGame.prototype.successfulMoveEvent = function () {
+  MazeGame.prototype.successfulMoveEvent = function() {
     if (this.neuralDisplay === null) {
       return;
     }

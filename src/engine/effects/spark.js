@@ -23,11 +23,11 @@ module.exports = function() {
     this.display.addObject(this);
   };
 
-  Spark.prototype.isHalfDone = function () {
+  Spark.prototype.isHalfDone = function() {
     return this.frameCount > this.maxFrameCount / 2;
   };
 
-  Spark.prototype.isDone = function () {
+  Spark.prototype.isDone = function() {
     return this.frameCount > this.maxFrameCount;
   };
 
@@ -54,7 +54,7 @@ module.exports = function() {
     }
   };
 
-  Spark.prototype.getFrameCount = function () {
+  Spark.prototype.getFrameCount = function() {
     return this.frameCount;
   };
 

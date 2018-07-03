@@ -17,7 +17,7 @@ module.exports = function() {
     }
   };
 
-  SubDisplay.prototype.isDone = function () {
+  SubDisplay.prototype.isDone = function() {
     return false;
   };
 

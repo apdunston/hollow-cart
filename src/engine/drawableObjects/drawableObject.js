@@ -9,12 +9,12 @@ module.exports = function() {
     this.isDoneValue = false;
     this.state = DrawableObjectState.STATIC;
     this.fadeDelta = 0.02;
-    this.callback = () => {};
+    this.callback = function() {};
   };
 
   DrawableObject.prototype.constructor = DrawableObject;
 
-  DrawableObject.prototype.isDone = function () {
+  DrawableObject.prototype.isDone = function() {
     return this.isDoneValue;
   };
 
@@ -26,15 +26,15 @@ module.exports = function() {
     this.isDoneValue = value;
   };
 
-  DrawableObject.prototype.fadeIn = function () {
+  DrawableObject.prototype.fadeIn = function() {
     this.state = DrawableObjectState.FADING_IN;
   };
 
-  DrawableObject.prototype.fadeOut = function () {
+  DrawableObject.prototype.fadeOut = function() {
     this.state = DrawableObjectState.FADING_OUT;
   };
 
-  DrawableObject.prototype.draw = function () {
+  DrawableObject.prototype.draw = function() {
     if (this.state === DrawableObjectState.FADING_IN) {
       this.fadeInStep();
     }
@@ -44,7 +44,7 @@ module.exports = function() {
     }
   };
 
-  DrawableObject.prototype.fadeInStep = function () {
+  DrawableObject.prototype.fadeInStep = function() {
     if (this.alpha >= Alpha.OPAQUE) {
       this.state = DrawableObjectState.STATIC;
       this.alpha = Alpha.OPAQUE;
@@ -54,7 +54,7 @@ module.exports = function() {
     this.alpha += this.fadeDelta;
   };
 
-  DrawableObject.prototype.fadeOutStep = function () {
+  DrawableObject.prototype.fadeOutStep = function() {
     if (this.alpha <= this.fadeDelta) {
       this.alpha = Alpha.INVISIBLE;
       this.state = DrawableObjectState.STATIC;

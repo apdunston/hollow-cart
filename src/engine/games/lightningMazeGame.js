@@ -22,7 +22,7 @@ module.exports = function() {
   LightningMazeGame.prototype = Object.create(MazeGame.prototype);
   LightningMazeGame.prototype.constructor = LightningMazeGame;
 
-  LightningMazeGame.prototype.clearDisplays = function () {
+  LightningMazeGame.prototype.clearDisplays = function() {
     this.mazeDisplay.clear();
     this.mazeDisplay.addLightningObject(this.maze);
     this.mazeDisplay.addObject(this.player);

@@ -16,7 +16,7 @@ module.exports = function() {
   Hall.prototype = Object.create(Maze.prototype);
   Hall.prototype.constructor = Hall;
 
-  Hall.prototype.makeDrawMap = function () {
+  Hall.prototype.makeDrawMap = function() {
     var horizontalSpaces = [];
     var verticalSpaces = [[], []];
 

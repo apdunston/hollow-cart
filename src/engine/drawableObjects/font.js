@@ -11,7 +11,7 @@ module.exports = {
   COURIER_NEW: "Courier New",
   SERIF: "serif",
   SANS_SERIF: "sans-serif",
-  values: function () {
+  values: function() {
     var self = this;
     return Object.keys(self).map(
       function (key) {
