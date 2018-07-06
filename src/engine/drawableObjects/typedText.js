@@ -3,6 +3,7 @@
 var DrawableObject = require('./drawableObject.js');
 var DisplayConstants = require('../enums/displayConstants.js');
 var Font = require('./font.js');
+var Alpha = require("../enums/alpha");
 
 module.exports = function() {
   var TypedTextState = {
@@ -23,6 +24,7 @@ module.exports = function() {
     this.typingFrame = 0;
     this.framesPerLetter = 5;
     this.size = size;
+    this.alpha = Alpha.OPAQUE;
     if (!this.size) {
       DisplayConstants.TEXT_SIZE;
     }
@@ -32,7 +34,7 @@ module.exports = function() {
   TypedText.prototype = Object.create(DrawableObject.prototype);
   TypedText.prototype.constructor = TypedText;
 
-  TypedText.prototype.type = function (fn) {
+  TypedText.prototype.start = function (fn) {
     this.typingState = TypedTextState.TYPING;
     this.fn = fn;
   };

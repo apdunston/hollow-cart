@@ -6,11 +6,11 @@ var TypedText = require('../drawableObjects/typedText.js');
 
 module.exports = function() {
     class KeyMazeScene extends Scene {
-        constructor(keyboardDriver, display, gridLength, squareLength) {
+        constructor(keyboardDriver, display, gridLength, squareLength, score) {
             super();
             this.display = display;
             this.squareLength = squareLength;
-            this.game = new KeyMazeGame(keyboardDriver, display, gridLength, squareLength);
+            this.game = new KeyMazeGame(keyboardDriver, display, gridLength, squareLength, score);
         }
 
         intro() {
@@ -29,7 +29,7 @@ module.exports = function() {
             }
             var callback = function() {setTimeout(next, 1000);};
             text.setCallback(callback);
-            text.type();
+            text.start();
         }
     }
     return KeyMazeScene;

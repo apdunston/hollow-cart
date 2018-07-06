@@ -5,7 +5,7 @@
  */
 
 var Sparkle = require('./sparkle.js');
-var Gamespace = require('../gamespace.js');
+var Colors = require('../enums/colors.js');
 
 module.exports = function() {
 
@@ -17,7 +17,7 @@ module.exports = function() {
     this.offset = offset;
     this.sparkles = [];
     this.isDoneValue = false;
-    colorIndex = Math.floor(Math.random() * Gamespace.rainbow.length);
+    colorIndex = Math.floor(Math.random() * Colors.rainbow.length);
     switch (offset) {
       case 1:
         pixelsSmaller = 8;break;

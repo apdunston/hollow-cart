@@ -2,6 +2,7 @@
 
 var DrawableObjectState = require('./drawableObjectState.js');
 var Alpha = require('../enums/alpha.js');
+var Colors = require('../enums/colors.js');
 
 module.exports = function() {
   var DrawableObject = function DrawableObject() {
@@ -9,6 +10,7 @@ module.exports = function() {
     this.isDoneValue = false;
     this.state = DrawableObjectState.STATIC;
     this.fadeDelta = 0.02;
+    this.color = Colors.WHITE;
     this.callback = function() {};
   };
 

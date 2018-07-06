@@ -5,7 +5,7 @@
  */
 
 var Square = require('../drawableObjects/square.js');
-var Gamespace = require('../gamespace.js');
+var Colors = require('../enums/colors.js');
 
 module.exports = function() {
   var Sparkle = function Sparkle(x, y, squareLength, duration, colorIndex) {
@@ -13,7 +13,7 @@ module.exports = function() {
     this.y = y;
     this.squareLength = squareLength;
 
-    this.drawable = new Square(this.x, this.y, this.squareLength, Gamespace.rainbow[0]);
+    this.drawable = new Square(this.x, this.y, this.squareLength, Colors.rainbow[0]);
     this.maxFrameCount = duration !== undefined ? duration : 15;
     this.frameCount = 0;
     this.framesPerColorChange = 5;
@@ -21,8 +21,8 @@ module.exports = function() {
   };
 
   Sparkle.prototype.colorForFramecount = function (count) {
-    // return Gamespace.rainbow[0];
-    return Gamespace.rainbow[Math.floor(count / this.framesPerColorChange) + this.startColor % Gamespace.rainbow.length];
+    // return Colors.rainbow[0];
+    return Colors.rainbow[Math.floor(count / this.framesPerColorChange) + this.startColor % Colors.rainbow.length];
   };
 
   Sparkle.prototype.isHalfDone = function() {

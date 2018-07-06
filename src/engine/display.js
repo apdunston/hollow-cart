@@ -4,6 +4,7 @@
  * Interface Display
  */
 
+var Rectangle = require('./drawableObjects/rectangle.js');
 var Square = require('./drawableObjects/square.js');
 
 module.exports = function() {
@@ -14,7 +15,8 @@ module.exports = function() {
     this.objects = [];
     this.backgroundOnly = false;
     this.width = renderer.getWidth();
-    this.backgroundObject = new Square(0, 0, this.width, this.color);
+    this.height = renderer.getHeight();
+    this.backgroundObject = new Rectangle(0, 0, this.width, this.height, this.color);
     this.addObject(this.backgroundObject);
     this.drawInterval = null;
   };
@@ -23,7 +25,7 @@ module.exports = function() {
 
   Display.prototype.setColor = function (value) {
     this.color = value;
-    this.objects[0] = new Square(0, 0, this.width, this.color);
+    this.objects[0] = new Rectangle(0, 0, this.width, this.height, this.color);
     this.render();
   };
 

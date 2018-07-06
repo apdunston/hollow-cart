@@ -18,9 +18,17 @@ module.exports = function() {
 
   Player.prototype.constructor = Player;
 
+  var carryInventory = function(self) {
+    for (var i = 0; i < self.inventory.length; i++) {
+      self.inventory[i].setX(self.x);
+      self.inventory[i].setY(self.y);
+    }
+  }
+
   Player.prototype.move = function (direction) {
     var success = Entity.prototype.move.call(this, direction);
     success && this.game.successfulMoveEvent();
+    carryInventory(this);
     return success;
   };
 
@@ -34,6 +42,8 @@ module.exports = function() {
 
   Player.prototype.addToInventory = function(item) {
     this.inventory.push(item);
+    console.log("Item", item)
+    item.pickUp();
   }
 
   Player.prototype.removeFromInventory = function(item) {

@@ -9,16 +9,15 @@ var SingleDisplayMazeGame = require('./mazeGame.js');
 var MazeData = require('../../mazeData.js');
 var Maze = require('../../gameObjects/maze.js');
 var Player = require('../../gameObjects/player.js');
-var Key = require('../../gameObjects/key.js');
+var Item = require('../../gameObjects/item.js');
 var Circle = require('../../drawableObjects/circle.js');
-
 
 module.exports = function() {
   var KeyMazeGame = function KeyMazeGame(keyboardDriver, display, gridLength, 
-      squareLength) {
+      squareLength, score) {
     var self = this;
-    SingleDisplayMazeGame.call(self, keyboardDriver, display, gridLength, squareLength);
-
+    SingleDisplayMazeGame.call(self, keyboardDriver, display, gridLength, 
+      squareLength, score);
   };
 
   KeyMazeGame.prototype = Object.create(SingleDisplayMazeGame.prototype);
@@ -29,12 +28,8 @@ module.exports = function() {
   }
 
   KeyMazeGame.prototype.clearDisplays = function() {
-    this.display.clear();
-    this.display.addObject(this.maze);
-    this.display.addObject(this.player);
-    this.display.addObject(this.goalObject);
+    SingleDisplayMazeGame.prototype.clearDisplays.call(this);
     this.display.addObject(this.key);
-    this.drawLoop();
   };
 
   var upTo = function(num) {
@@ -50,30 +45,18 @@ module.exports = function() {
       return placeKey(self);
     }
 
-    self.key = new Key(x, y, self.squareLength, self.gridTranslator);
+    self.key = new Item(x, y, self.squareLength, self.gridTranslator);
   }
 
   KeyMazeGame.prototype.reset = function() {
-    this.won = false;
-    this.map = MazeData.generate(this.gridLength, this.gridLength);
-    this.drawMap = MazeData.translate(this.map);
-    this.maze = new Maze(this.drawMap, this.squareLength);
-    this.player = new Player(this.gridLength, this.squareLength, this);
-    var goalSquareLocation = this.gridLength * this.squareLength - this.squareLength / 2;
-    this.goalObject = new Circle(goalSquareLocation, goalSquareLocation, this.squareLength / 4, "green");
-    placeKey(this)
-    this.clearDisplays();
+    placeKey(this);
+    SingleDisplayMazeGame.prototype.reset.call(this);
   };
 
   var playerAtKey = function(player, key) {
     return !player.has(key) &&
       player.getX() === key.getX() &&
       player.getY() === key.getY() ;
-  }
-
-  var moveKeyWithPlayer = function(key, player) {
-    key.setX(player.getX());
-    key.setY(player.getY());
   }
 
   KeyMazeGame.prototype.performMove = function(move) {
@@ -86,10 +69,6 @@ module.exports = function() {
 
     if (playerAtKey(this.player, this.key)) {
       this.player.addToInventory(this.key);
-    }
-
-    if (this.player.has(this.key)) {
-      moveKeyWithPlayer(this.key, this.player);
     }
   };
 

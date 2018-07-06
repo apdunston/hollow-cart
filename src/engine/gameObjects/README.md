@@ -1,0 +1,1 @@
+GameObjects must have draw() and isDone() functions.

@@ -48,6 +48,18 @@ module.exports = function() {
         win() {
             this.game.win();
         }
+
+        getMaze() {
+            return this.game.getMaze();            
+        }
+
+        setMaze(maze) {
+            this.game.setMaze(maze);
+        }
+
+        setTimeRemaining(time) {
+            this.game.setTimeRemaining(time);
+        }
     }
 
     return Scene;

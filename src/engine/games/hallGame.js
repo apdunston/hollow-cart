@@ -66,7 +66,7 @@ module.exports = function() {
     var margin = DisplayConstants.TEXT_MARGIN;
     var textSize = DisplayConstants.TEXT_SIZE;
     var text = new TypedText(margin, 3 * margin, "> Move white square to green circle", "white");
-    text.type();
+    text.start();
     this.statusDisplay.addObject(text);
     this.state = HallGameStates.END;
     this.maze = new Hall(this.squareLength, this.hallLength, this.gridTranslator);

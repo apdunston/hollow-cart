@@ -5,7 +5,6 @@
  */
 
 var Square = require('../drawableObjects/square.js');
-var Gamespace = require('../gamespace.js');
 
 module.exports = function() {
   var Spark = function Spark(display, x, y, squareLength, duration, colorIndex) {

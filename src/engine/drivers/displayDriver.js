@@ -24,6 +24,10 @@ module.exports = function() {
     return this.canvas.width;
   };
 
+  DisplayDriver.prototype.getHeight = function() {
+    return this.canvas.height;
+  };
+
   DisplayDriver.prototype.drawRectangle = function (x, y, xLength, yWidth, color, alpha) {
     _alphaWrap(this, alpha, function (self) {
       self.context.fillStyle = color;

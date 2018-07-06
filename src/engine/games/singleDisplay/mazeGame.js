@@ -5,22 +5,25 @@
  * Interface KeyDownListener
  */
 
-var Game = require('../game.js');
+var SingleDisplayGame = require('./game.js');
 var MazeData = require('../../mazeData.js');
 var Gamespace = require('../../gamespace.js');
+var Colors = require('../../enums/colors.js');
 var GridTranslator = require('../../gridTranslator.js');
 var Maze = require('../../gameObjects/maze.js');
 var Player = require('../../gameObjects/player.js');
+var CountdownTimer = require('../../gameObjects/countdownTimer.js');
 var Circle = require('../../drawableObjects/circle.js');
 var Spark = require('../../effects/spark.js');
 
+var defaultTimeRemaining = 60;
 
 module.exports = function() {
   var SingleDisplayMazeGame = function SingleDisplayMazeGame(keyboardDriver, display, gridLength, 
-      squareLength) {
+      squareLength, score) {
     var self = this;
 
-    Game.call(self);
+    SingleDisplayGame.call(self);
     this.gridLength = gridLength;
     this.squareLength = squareLength;
     this.display = display;
@@ -29,10 +32,15 @@ module.exports = function() {
     this.keyboardDriver = keyboardDriver;
     this.networkDriver = null;
     this.gridTranslator = new GridTranslator(0, 0, this.squareLength * 3.5);
+
+    this.score = score;
+    this.timeRemaining = defaultTimeRemaining;
+    this.countdownTimer = new CountdownTimer(this.timeRemaining, this.gridLength, this.squarelength, function() {self.lose();});
   };
 
-  SingleDisplayMazeGame.prototype = Object.create(Game.prototype);
+  SingleDisplayMazeGame.prototype = Object.create(SingleDisplayGame.prototype);
 
+  //!!ADRIAN - Move this to its own effect class
   SingleDisplayMazeGame.prototype.showerOfSparks = function(xMultiplier, yMultiplier) {
     var self = this;
     var position = this.translatedPlayerPosition();
@@ -50,7 +58,7 @@ module.exports = function() {
       var distanceInSquares = distance/self.squareLength;
       var length = sparkLength * distanceInSquares;
       
-      new Spark(self.display, sparkX, sparkY, length, framesDuration, Gamespace.randomColor())
+      new Spark(self.display, sparkX, sparkY, length, framesDuration, Colors.randomColor())
     }
 
     for (var i = 0; i < numSparks; i++) {
@@ -60,13 +68,20 @@ module.exports = function() {
   }
 
   SingleDisplayMazeGame.prototype.setGridLength = function(gridLength) {
-    this.gridLength = gridLength;    
+    this.gridLength = gridLength;   
+    this.countdownTimer.setGridLength(gridLength);
     return this;
+  }
+
+  SingleDisplayMazeGame.prototype.setTimeRemaining = function(time) {
+    this.timeRemaining = time;
+    this.countdownTimer.setTimeRemaining(time);
   }
 
   SingleDisplayMazeGame.prototype.setSquareLength = function(squareLength) {
     this.squareLength = squareLength;    
     this.gridTranslator = new GridTranslator(0, 0, this.squareLength);
+    this.countdownTimer.setSquareLength(squareLength);
     return this;
   }
 
@@ -79,9 +94,15 @@ module.exports = function() {
     return this.maze;
   }
 
+  SingleDisplayMazeGame.prototype.setMaze = function(maze) {
+    this.maze = maze;    
+    this.clearDisplays();
+  }
+
   SingleDisplayMazeGame.prototype.start = function() {
     var self = this;
-    Game.prototype.start.call(self);
+    SingleDisplayGame.prototype.start.call(self);
+
     this.reset();
   };
 
@@ -89,15 +110,26 @@ module.exports = function() {
     this.display.render();
   };
 
-  SingleDisplayMazeGame.prototype.clearDisplays = function() {
-    this.display.clear();
-    this.display.addObject(this.maze);
+  SingleDisplayMazeGame.prototype.clearDisplaysCommon = function() {
+    SingleDisplayGame.prototype.clearDisplays.call(this);
     this.display.addObject(this.player);
     this.display.addObject(this.goalObject);
+    this.display.addObject(this.countdownTimer);
+    if (this.score) {
+      this.display.addObject(this.score);
+    }
+  }
+
+  SingleDisplayMazeGame.prototype.clearDisplays = function() {
+    this.clearDisplaysCommon();
+    this.display.addObject(this.maze);
     this.drawLoop();
   };
 
   SingleDisplayMazeGame.prototype.reset = function() {
+    this.countdownTimer.stop();
+    this.countdownTimer.setTimeRemaining(this.timeRemaining);
+    this.countdownTimer.start();
     this.won = false;
     this.map = MazeData.generate(this.gridLength, this.gridLength);
     this.drawMap = MazeData.translate(this.map);
@@ -126,10 +158,6 @@ module.exports = function() {
 
   SingleDisplayMazeGame.prototype.getMoveForEvent = function(evt) {
     var self = this;
-
-    if (!self.running) {
-      return function() {};
-    }
 
     switch (evt.keyCode) {
       case Gamespace.LEFT_CODE:
@@ -166,11 +194,11 @@ module.exports = function() {
     var validMoves = self.validMoves(self.player.getX(), self.player.getY());
 
     if (success && validMoves.length === 2) {
-      if (self.timeout != null) {
-        clearTimeout(self.timeout)
+      if (self.movementTimeout != null) {
+        clearTimeout(self.movementTimeout)
       }
 
-      self.timeout = setTimeout(function() {self.performMove(move);}, 20);
+      self.movementTimeout = setTimeout(function() {self.performMove(move);}, 20);
     } else {
       return success;
     }
@@ -189,6 +217,9 @@ module.exports = function() {
   };
 
   SingleDisplayMazeGame.prototype.keyDown = function (evt) {
+    if (!this.running) {
+      return;
+    }
     var move = this.getMoveForEvent(evt);
     this.performMove(move);
   };
@@ -200,19 +231,26 @@ module.exports = function() {
   SingleDisplayMazeGame.prototype.win = function() {
     var self = this;
 
-    if (self.timeout != null) {
-      clearTimeout(self.timeout)
+    if (self.movementTimeout != null) {
+      clearTimeout(self.movementTimeout)
     }
 
     this.stop();
+    this.countdownTimer.stop();
     this.won = true;
     this.networkDriver.sendWin(this.playerNumber);
     
     this.display.flash("blue", 500, function() {
       self.gameEnd({ won: true });
     });
-
   };
+
+  SingleDisplayGame.prototype.lose = function() {
+    var self = this;
+    this.countdownTimer.stop();
+    this.running = false;
+    self.gameEnd({won: false});
+  }
 
   SingleDisplayMazeGame.prototype.successfulMoveEvent = function() {
     var self = this;

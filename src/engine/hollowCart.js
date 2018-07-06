@@ -123,20 +123,25 @@ module.exports = function() {
   }
 
 
+  /**
+   * 16x9 ratio
+   */
   HollowCart.prototype.adjustCanvas = function() {
     var canvas = $('canvas');
 
     var canvasLength = window.innerWidth;
-    if (window.innerHeight < canvasLength) {
-      canvasLength = window.innerHeight;
-    }
 
-    canvasLength = canvasLength - 75;
-    canvas.attr('height', canvasLength).attr('width', canvasLength);
+    // if (window.innerHeight < canvasLength) {
+    //   canvasLength = window.innerHeight;
+    // }
+
+    var canvasHeight = Math.floor(canvasLength / 9 * 16);
+    canvas.attr('height', canvasHeight).attr('width', canvasLength);
     
     while (canvasLength > 0 && !canvas.visible()) {
       canvasLength -= 5;
-      canvas.attr('height', canvasLength).attr('width', canvasLength);
+      canvasHeight = Math.floor(canvasLength / 9 * 16);
+      canvas.attr('height', canvasHeight).attr('width', canvasLength);
     }
 
     if (canvasLength <= 0) {
