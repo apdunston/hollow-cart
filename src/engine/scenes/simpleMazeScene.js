@@ -6,11 +6,11 @@ var TypedText = require('../drawableObjects/typedText.js');
 
 module.exports = function() {
     class SimpleMazeScene extends Scene {
-        constructor(keyboardDriver, display, gridLength, squareLength, score) {
+        constructor(keyboardDriver, display, gridLength, squareLength, score, playerNumber) {
             super();
             this.display = display;
             this.squareLength = squareLength;
-            this.game = new MazeGame(keyboardDriver, display, gridLength, squareLength, score);
+            this.game = new MazeGame(keyboardDriver, display, gridLength, squareLength, score, playerNumber);
         }
 
         intro() {

@@ -8,10 +8,10 @@ var Game = require('../game.js');
 module.exports = function() {
 
   var SingleDisplayLightningMazeGame = function (keyboardDriver, display, 
-        gridLength, squareLength, score) {
+        gridLength, squareLength, score, playerNumber) {
     var self = this;
     SingleDisplayMazeGame.call(self, keyboardDriver, display, 
-      gridLength, squareLength, score);
+      gridLength, squareLength, score, playerNumber);
     this.gridLength = gridLength;
     this.squareLength = squareLength;
     this.display = display;

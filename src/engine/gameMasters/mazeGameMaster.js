@@ -37,6 +37,9 @@ module.exports = function() {
 
   MazeGameMaster.prototype.setPlayerNumber = function(playerNumber) {
     this.playerNumber = playerNumber;
+    for(var i = 0; i < this.games.length; i++) {
+      this.games[i].setPlayerNumber(playerNumber);
+    }
     return this;
   }
 

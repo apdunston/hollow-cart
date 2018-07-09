@@ -60,6 +60,14 @@ module.exports = function() {
         setTimeRemaining(time) {
             this.game.setTimeRemaining(time);
         }
+
+        setPositions(data) {
+            this.game.setPositions(data);
+        }
+
+        setPlayerNumber(playerNumber) {
+            this.game.setPlayerNumber(playerNumber);
+        }
     }
 
     return Scene;

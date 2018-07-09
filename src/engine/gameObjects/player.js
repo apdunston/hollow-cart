@@ -42,7 +42,6 @@ module.exports = function() {
 
   Player.prototype.addToInventory = function(item) {
     this.inventory.push(item);
-    console.log("Item", item)
     item.pickUp();
   }
 

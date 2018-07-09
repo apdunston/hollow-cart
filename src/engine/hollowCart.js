@@ -122,7 +122,6 @@ module.exports = function() {
       .start(maze);
   }
 
-
   /**
    * 16x9 ratio
    */
@@ -130,10 +129,6 @@ module.exports = function() {
     var canvas = $('canvas');
 
     var canvasLength = window.innerWidth;
-
-    // if (window.innerHeight < canvasLength) {
-    //   canvasLength = window.innerHeight;
-    // }
 
     var canvasHeight = Math.floor(canvasLength / 9 * 16);
     canvas.attr('height', canvasHeight).attr('width', canvasLength);

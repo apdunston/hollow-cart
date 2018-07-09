@@ -20,7 +20,7 @@ var defaultTimeRemaining = 60;
 
 module.exports = function() {
   var SingleDisplayMazeGame = function SingleDisplayMazeGame(keyboardDriver, display, gridLength, 
-      squareLength, score) {
+      squareLength, score, playerNumber) {
     var self = this;
 
     SingleDisplayGame.call(self);
@@ -36,6 +36,8 @@ module.exports = function() {
     this.score = score;
     this.timeRemaining = defaultTimeRemaining;
     this.countdownTimer = new CountdownTimer(this.timeRemaining, this.gridLength, this.squarelength, function() {self.lose();});
+
+    this.playerNumber = playerNumber;
   };
 
   SingleDisplayMazeGame.prototype = Object.create(SingleDisplayGame.prototype);
@@ -67,6 +69,23 @@ module.exports = function() {
     }
   }
 
+  // positions come in as a list of objects:
+  // {number: 1, x: 8, y: 5}
+  // Wipe out all players but the primary.
+  // Add players one by one.
+  // Reset the display to draw the new state of affairs.
+  SingleDisplayGame.prototype.setPositions = function(positions) {
+    this.players = [this.players[0]];
+    for (var x = 0; x < positions.length; x++) {
+      if (positions[x].number == this.playerNumber) {
+        continue;
+      }
+
+      this.addPlayer(positions[x].x, positions[x].y);
+      this.clearDisplays();
+    }
+  }
+
   SingleDisplayMazeGame.prototype.setGridLength = function(gridLength) {
     this.gridLength = gridLength;   
     this.countdownTimer.setGridLength(gridLength);
@@ -76,6 +95,11 @@ module.exports = function() {
   SingleDisplayMazeGame.prototype.setTimeRemaining = function(time) {
     this.timeRemaining = time;
     this.countdownTimer.setTimeRemaining(time);
+  }
+
+  SingleDisplayMazeGame.prototype.setPlayerNumber = function(playerNumber) {
+    this.playerNumber = playerNumber;
+    return this;
   }
 
   SingleDisplayMazeGame.prototype.setSquareLength = function(squareLength) {
@@ -95,12 +119,18 @@ module.exports = function() {
   }
 
   SingleDisplayMazeGame.prototype.setMaze = function(maze) {
-    this.maze = maze;    
-    this.clearDisplays();
-  }
+    this.stop();
+    SingleDisplayGame.prototype.start.call(this);
+    this.reset(maze);
+  };
 
   SingleDisplayMazeGame.prototype.start = function() {
     var self = this;
+
+    if (this.playerNumber == null) {
+      throw("Player number cannot be null");
+    }
+
     SingleDisplayGame.prototype.start.call(self);
 
     this.reset();
@@ -115,9 +145,27 @@ module.exports = function() {
     this.display.addObject(this.player);
     this.display.addObject(this.goalObject);
     this.display.addObject(this.countdownTimer);
+
     if (this.score) {
       this.display.addObject(this.score);
     }
+
+    for (var x = 0; x < this.players.length; x++) {
+      this.display.addObject(this.players[x]);
+    }
+  }
+
+  SingleDisplayMazeGame.prototype.addPlayer = function (x, y) {
+    var player = new Player(this.gridLength, this.squareLength, this);
+    player.setPosition(x || 0, y || 0);
+    
+    if (this.players.length == 0) {
+      this.player = player;
+    } else {
+      player.setColor("#555555");
+    }
+
+    this.players.push(player);
   }
 
   SingleDisplayMazeGame.prototype.clearDisplays = function() {
@@ -126,14 +174,22 @@ module.exports = function() {
     this.drawLoop();
   };
 
-  SingleDisplayMazeGame.prototype.reset = function() {
+  SingleDisplayMazeGame.prototype.reset = function(maze) {
+    this.players = [];
+    this.addPlayer();
     this.countdownTimer.stop();
     this.countdownTimer.setTimeRemaining(this.timeRemaining);
     this.countdownTimer.start();
     this.won = false;
-    this.map = MazeData.generate(this.gridLength, this.gridLength);
-    this.drawMap = MazeData.translate(this.map);
-    this.maze = new Maze(this.drawMap, this.squareLength);
+
+    if (maze == null || maze.drawMap == null) {
+      var map = MazeData.generate(this.gridLength, this.gridLength);
+      var drawMap = MazeData.translate(map);
+      this.maze = new Maze(drawMap, this.squareLength);
+    } else {
+      this.maze = new Maze(maze.drawMap, this.squareLength);
+    }
+    
     this.player = new Player(this.gridLength, this.squareLength, this);
     var goalSquareLocation = this.gridLength * this.squareLength - this.squareLength / 2;
     this.goalObject = new Circle(goalSquareLocation, goalSquareLocation, this.squareLength / 4, "green");
@@ -257,6 +313,12 @@ module.exports = function() {
     if (this.display === null) {
       return;
     }
+
+    this.networkDriver.send({
+      x: this.player.x,
+      y: this.player.y,
+      playerNumber: this.playerNumber
+    });
   };
 
   SingleDisplayMazeGame.prototype.translatedPlayerPosition = function() {
